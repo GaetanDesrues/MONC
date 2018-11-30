@@ -55,7 +55,7 @@ cows = DataLoader(
 
 # Taille totale du dataset
 len_cows = len(cows)
-print("len : "+str(len_cows))
+# print("len : "+str(len_cows))
 
 epochs = options.epochs
 len_train = int(float(options.lengthtrain) * len_cows)
