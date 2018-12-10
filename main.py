@@ -18,7 +18,7 @@ import torchvision.utils as vutils
 
 
 #Lecture des options shell
-options = OptionCompilation() # haha
+options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
 writer = SummaryWriter('output/runs/cells-2')#exp-29-11-test')
