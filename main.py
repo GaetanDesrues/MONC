@@ -18,7 +18,7 @@ import torchvision.utils as vutils
 
 
 #Lecture des options shell
-options = OptionCompilation()
+options = OptionCompilation()# haha
 
 # TensorBoardX pour les visualisations
 writer = SummaryWriter('output/runs/cells-2')#exp-29-11-test')
@@ -31,7 +31,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(device)
+model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(device) # TODO
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
