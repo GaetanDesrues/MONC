@@ -8,7 +8,7 @@ import torch.nn.functional as F
 def Tester(startIndex, cows, crop_size, device, model):
     model.eval()
     error = 0
-    nbElem = len(cows) - startIndex
+    nbElem = len(cows) - startIndex - 1
     for i in range(nbElem):
         z, zy = PreparationDesDonnees(startIndex+i, 1, crop_size, cows)
         X = z.to(device)

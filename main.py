@@ -99,7 +99,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Test sur chaque image restante, cad non utilisée pour l'entrainement
-    errTe = fc.Tester(len_train-(len_train%minibatch)-1, cows, crop_size, device, model)
+    errTe = fc.Tester(len_train-(len_train%minibatch), cows, crop_size, device, model)
     writer.add_scalar("Erreur sur le test par époque ", errTe, epoch)
 
 
