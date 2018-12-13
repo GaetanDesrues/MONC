@@ -1,1 +1,2 @@
 Epoque Erreur entrainement Erreur test
+0 0.4802889823913574 0
