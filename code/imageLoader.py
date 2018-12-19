@@ -119,9 +119,6 @@ def listData(path):
 
 
 
-listData("./data/MMK")
-
-
 
 class DataSample():
     def __init__(self, path):
