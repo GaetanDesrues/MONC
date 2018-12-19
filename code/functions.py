@@ -37,13 +37,12 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows):
     zy = torch.Tensor(minibatch,crop_size,crop_size).zero_()
 
     for m in range(minibatch): # On parcourt le training set batch par batch
-        cow_i = cows[i+m+1]
-        diCow = cow_i.Resize((crop_size, crop_size)) # Steven : à changer
+        diCow = cows[i+m+1]
+        imageOriginal = diCow["image"].resize((crop_size, crop_size), Image.LANCZOS) # Steven : à changer
+        maskOriginal = diCow["mask"].resize((crop_size, crop_size), Image.LANCZOS) # Steven : à changer
 
-        imageOriginal = ImageOps.grayscale(diCow['image'])
-        maskOriginal = ImageOps.grayscale(diCow['mask'])
-        # imageOriginal = diCow['image']
-        # maskOriginal = diCow['mask']
+        imageOriginal = ImageOps.grayscale(imageOriginal)
+        maskOriginal = ImageOps.grayscale(maskOriginal)
 
         X = transforms.ToTensor()(imageOriginal)
         y = transforms.ToTensor()(maskOriginal)

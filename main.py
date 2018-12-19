@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from code.unet import UNet
-from code.imageLoader import DataLoader, Data
+from code.imageLoader import DataLoader, Data, DataSample
 from code.lossFiles import LossFile as LossModule
 from code.optionCompil import OptionCompilation
 import code.functions as fc
@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-02')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-01')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -46,11 +46,14 @@ optim = torch.optim.SGD(model.parameters() , lr=1)
 # optim = torch.optim.Adam(model.parameters() , lr=0.0001)
 
 # Objet représentant les données
-cows = DataLoader(
-    config['Model']['imgPath'],
-    config['Model']['maskPath'],
-    config['Model']['file'],
-    config['Model']['extension'])
+# cows = DataLoader(
+#     config['Model']['imgPath'],
+#     config['Model']['maskPath'],
+#     config['Model']['file'],
+#     config['Model']['extension'])
+
+cows = DataSample("./data/MMK")
+# cells[1]["mask"].show()# .resize(size, Image.LANCZOS)
 
 
 # Taille totale du dataset
