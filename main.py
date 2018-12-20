@@ -83,10 +83,10 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
-        pred = transforms.ToPILImage()(prediction)
+        pred = transforms.ToPILImage()(prediction[0:])
         pred = transforms.ToTensor()(pred)
 
-        print(pred[0,:,30:60,50:80])
+        print(pred[:,30:60,50:80])
 
         imgATester = prediction[0,:,:,:]
         mask = zy[0:]
