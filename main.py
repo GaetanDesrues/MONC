@@ -84,7 +84,7 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
-        zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
+        # zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
         loss = F.cross_entropy(prediction, y)
