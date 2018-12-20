@@ -85,7 +85,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
         imgATester = prediction[0,:,:,:]
         mask = zy[0:]
-        # xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
+        xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
         writer.add_image('d Entrainement '+str(i), xx, epoch)
 
 
