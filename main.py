@@ -31,7 +31,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, depth=3, padding=True, up_mode='upsample').to(device)
+model = UNet(in_channels=1, n_classes=1, depth=3, padding=True, up_mode='upsample').to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
