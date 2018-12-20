@@ -13,7 +13,7 @@ def Tester(startIndex, cows, crop_size, device, model):
         z, zy = PreparationDesDonnees(startIndex+i, 1, crop_size, cows)
         X = z.to(device)
         prediction = model(X)
-        zy = CorrigerPixels(zy, crop_size, prediction.shape[2])
+        # zy = CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.to(device).long()
         loss = F.cross_entropy(prediction, y)
         error = error + loss.item()
@@ -55,7 +55,7 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows):
 
 
 
-def CorrigerPixels(zy, crop_size, predSize):
-    n_pi = (crop_size - predSize)//2
-    zy = zy[:,n_pi:-n_pi,n_pi:-n_pi] # Essayer d'exécuter en commantant pour voir l'erreur
-    return zy
+# def CorrigerPixels(zy, crop_size, predSize):
+#     n_pi = (crop_size - predSize)//2
+#     zy = zy[:,n_pi:-n_pi,n_pi:-n_pi] # Essayer d'exécuter en commantant pour voir l'erreur
+#     return zy
