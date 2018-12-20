@@ -16,7 +16,7 @@ import torch
 import torch.nn.functional as F
 import torchvision.utils as vutils
 import torchvision.transforms as transforms
-from PIL import ToPILImage
+from PIL import Image
 
 
 #Lecture des options shell
