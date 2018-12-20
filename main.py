@@ -95,8 +95,8 @@ for epoch in range(epochs): # Boucle sur les époques
         # Modification des poids suivant l'algorithme du gradient choisi
         optim.step()
 
-    xx = vutils.make_grid(prediction, normalize=True, scale_each=True)
-    writer.add_image('Image training', xx, epoch)
+    # xx = vutils.make_grid(prediction[0:], normalize=True, scale_each=True)
+    # writer.add_image('Image training', xx, epoch)
 
     errMoy = errMoy/epochs
 
