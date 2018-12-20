@@ -16,7 +16,6 @@ import torch
 import torch.nn.functional as F
 import torchvision.utils as vutils
 import torchvision.transforms as transforms
-from PIL import Image
 
 
 #Lecture des options shell
@@ -84,7 +83,8 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
-        prediction = transforms.ToTensor()(prediction.ToPILImage())
+        prediction = ToPILImage()(prediction)
+        prediction = transforms.ToTensor()(prediction)
 
         print(prediction[0,:,30:60,50:80])
 
