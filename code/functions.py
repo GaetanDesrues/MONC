@@ -11,7 +11,6 @@ def Tester(len_test, cows, crop_size, device, model):
     len_cows = len(cows)
     for i in range(len_test):
         z, zy = PreparationDesDonnees(len_cows-i-1, 1, crop_size, cows)
-        print(len_cows-i-1)
         X = z.to(device)
         prediction = model(X)
         # zy = CorrigerPixels(zy, crop_size, prediction.shape[2])

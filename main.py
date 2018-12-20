@@ -82,6 +82,13 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
+
+        imgATester = prediction[0:]
+        mask = zy[0:]
+        xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
+        writer.add_image('d - Entrainement', xx, epoch)
+
+
         # zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
