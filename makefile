@@ -2,7 +2,7 @@ EPOCHS = 10
 MINIBATCH = 10
 CROP_SIZE = 256
 LEN_TRAIN = 0.6
-FILE_NAME = test-01
+FILE_NAME = test-02
 
 
 train : train.py
