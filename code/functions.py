@@ -10,8 +10,8 @@ def Tester(len_test, cows, crop_size, device, model):
     error = 0
     len_cows = len(cows)
     for i in range(len_test):
-        z, zy = PreparationDesDonnees(len_cows-i, 1, crop_size, cows)
-        print(len_cows-i)
+        z, zy = PreparationDesDonnees(len_cows-i-1, 1, crop_size, cows)
+        print(len_cows-i-1)
         X = z.to(device)
         prediction = model(X)
         # zy = CorrigerPixels(zy, crop_size, prediction.shape[2])
@@ -38,7 +38,7 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows):
     zy = torch.Tensor(minibatch,crop_size,crop_size).zero_()
 
     for m in range(minibatch): # On parcourt le training set batch par batch
-        diCow = cows[i+m+1]
+        diCow = cows[i+m]
         imageOriginal = diCow["image"].resize((crop_size, crop_size), Image.LANCZOS) # Steven : à changer
         maskOriginal = diCow["mask"].resize((crop_size, crop_size), Image.LANCZOS) # Steven : à changer
 

@@ -124,7 +124,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
 fin = time.time()
-pBarEpochs.finish()
+# pBarEpochs.finish()
 
 timer = round((fin - debut)/60, 2)
 print(" ------> Temps de l'apprentissage :", timer, "min.")
