@@ -83,14 +83,14 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
-        pred = transforms.ToPILImage()(prediction[0:])
-        pred = transforms.ToTensor()(pred)
+        pred = prediction[0:]#transforms.ToPILImage()()
+        # pred = transforms.ToTensor()(pred)
 
         print(pred[:,30:60,50:80])
 
-        imgATester = prediction[0,:,:,:]
-        mask = zy[0:]
-        xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
+        # imgATester = prediction[0,:,:,:]
+        # mask = zy[0:]
+        xx = vutils.make_grid(pred, normalize=True, scale_each=True)
         writer.add_image('d Entrainement '+str(i), xx, epoch)
 
 
