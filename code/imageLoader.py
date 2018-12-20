@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from PIL import Image, ImageOps
+from random import uniform
 import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset
@@ -45,6 +46,27 @@ class Data():
 
     def Torch2Pil(self):
         return transforms.ToPilImage()(self)
+
+    def Symmetry(self):
+        img = self.ExtractAsPIL()['image']
+        return img.transpose(Image.FLIP_LEFT_RIGHT)
+
+    def Crop(self):
+        img = self.ExtractAsPIL()['image']
+        img_size = img.img_size
+        #Def d'une box
+        C = 1.5
+        D = 0.5
+        # x = im_size[0]/3
+        # y = im_size[1]/3
+        # Position aléatoire de la fenêtre de crop comprise dans une bande centrale de l'image
+        x = uniform(im_size[0]/10,im_size[0]/C)
+        y = uniform(im_size[1]/3,2/3*im_size[1])
+        width = C*x
+        heigt = D*y
+        box = (x,y,width,heigt)
+        im = img.crop(box)
+        return  im.resize(im_size, Image.LANCZOS)
 
 # Représente l'ensemble du dataset
 class DataLoader(Dataset):

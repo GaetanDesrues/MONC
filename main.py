@@ -18,7 +18,11 @@ import torchvision.utils as vutils
 
 
 #Lecture des options shell
+<<<<<<< HEAD
 options = OptionCompilation() #Haha
+=======
+options = OptionCompilation()# haha
+>>>>>>> e7340a6ae18439ecb19a58dcfc0d3f74365802b1
 
 # TensorBoardX pour les visualisations
 writer = SummaryWriter('output/runs/test-02')#exp-29-11-test')
@@ -31,7 +35,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(device)
+model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(device) # TODO
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
@@ -55,7 +59,7 @@ cows = DataLoader(
 
 # Taille totale du dataset
 len_cows = len(cows)
-print("len : "+str(len_cows))
+# print("len : "+str(len_cows))
 
 epochs = options.epochs
 len_train = int(float(options.lengthtrain) * len_cows)
