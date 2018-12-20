@@ -86,7 +86,7 @@ for epoch in range(epochs): # Boucle sur les époques
         imgATester = prediction[0:]
         mask = zy[0:]
         xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
-        writer.add_image('d - Entrainement', xx, epoch)
+        writer.add_image('d Entrainement '+str(i/minibatch), xx, epoch)
 
 
         # zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
@@ -117,14 +117,14 @@ for epoch in range(epochs): # Boucle sur les époques
     # Tester sur une image pour visualiser la progression globale :
     imgATester, mask = fc.PreparationDesDonnees(len_cows-24, 1, crop_size, cows)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
-    writer.add_image('c - Image visée', xx, epoch)
+    writer.add_image('c Image visée', xx, epoch)
     # Prédiction du modèle
     maskPredit = fc.TesterUneImage(imgATester, model, device)
     x = vutils.make_grid(maskPredit, normalize=True, scale_each=True)
-    writer.add_image("a - Segmentation prédite par le réseau", x, epoch)
+    writer.add_image("a Segmentation prédite par le réseau", x, epoch)
     # Masque
     y = vutils.make_grid(mask, normalize=True, scale_each=True)
-    writer.add_image("b - Masque (segmentation) de l'image visée", y, epoch)
+    writer.add_image("b Masque (segmentation) de l'image visée", y, epoch)
 
 
     ### Fin de l'époque epoch
