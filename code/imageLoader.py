@@ -47,13 +47,18 @@ class Data():
     def Torch2Pil(self):
         return transforms.ToPilImage()(self)
 
-    def Symmetry(self):
+    def SymmetryLeftRight(self):
         img = self.ExtractAsPIL()['image']
-        return img.transpose(Image.FLIP_LEFT_RIGHT)
+        mask = self.ExtractAsPIL()['mask']
+        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+        mask = mask.transpose(Image.FLIP_LEFT_RIGHT)
+        return {'image' : img, 'mask' : mask}
 
-    def Crop(self):
+    def RandomCrop(self):
         img = self.ExtractAsPIL()['image']
+        mask = self.ExtractAsPIL()['mask']
         img_size = img.img_size
+        mask_size = mask.img_size
         #Def d'une box
         C = 1.5
         D = 0.5
@@ -65,8 +70,11 @@ class Data():
         width = C*x
         heigt = D*y
         box = (x,y,width,heigt)
-        im = img.crop(box)
-        return  im.resize(im_size, Image.LANCZOS)
+        img = img.crop(box)
+        mask = mask.crop(box)
+        img = img.resize(im_size, Image.LANCZOS)
+        mask = mask.resize(mask_size, Image.LANCZOS)
+        return {'image' : img, 'mask' : mask}
 
 # Représente l'ensemble du dataset
 class DataLoader(Dataset):
