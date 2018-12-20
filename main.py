@@ -9,7 +9,7 @@ import code.functions as fc
 import os
 import time
 import configparser
-from progressbar import ProgressBar, Bar, SimpleProgress
+# from progressbar import ProgressBar, Bar, SimpleProgress
 import sys
 from tensorboardX import SummaryWriter
 import torch
@@ -21,8 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/Cells/'+options.fileName)#exp-29-11-test')
-# arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
+writer = SummaryWriter('output/runs/Cells/'+options.fileName)
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -31,7 +30,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(device)
+model = UNet(in_channels=1, n_classes=2, depth=3, padding=True, up_mode='upsample').to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
@@ -53,31 +52,30 @@ optim = torch.optim.SGD(model.parameters() , lr=1)
 #     config['Model']['extension'])
 
 cows = DataSample("./data/MMK")
-# cells[1]["mask"].show()# .resize(size, Image.LANCZOS)
 
 
-# Taille totale du dataset
+# Définition des tailles
 len_cows = len(cows)
-print("len : "+str(len_cows))
-
 epochs = options.epochs
-len_train = int(float(options.lengthtrain) * len_cows)
-crop_size = options.cropsize
 minibatch = options.minibatch
+crop_size = options.cropsize
+len_train = int(float(options.lengthtrain) * len_cows)
+len_train =  len_train - (len_train%minibatch)
+len_test = len_cows - len_train
+print("Taille du dataset : "+str(len_cows))
+print("Taille du training set : "+str(len_train))
+print("Taille du test set : "+str(len_test))
 
 model.train()
 
-# erreurMiniBatch = []
-# erreurEpoch = []
-
 # Définition du fichier d'erreurs argument=nom du fichier à aller cherche dans config
-lossFile = LossModule(str(config['Train']['lossFile']))
+# lossFile = LossModule(str(config['Train']['lossFile']))
 
-pBarEpochs = ProgressBar(widgets = ['Epoques : ', SimpleProgress(), '   ', Bar()], maxval = epochs).start()
+# pBarEpochs = ProgressBar(widgets = ['Epoques : ', SimpleProgress(), '   ', Bar()], maxval = epochs).start()
 debut = time.time()
 
 for epoch in range(epochs): # Boucle sur les époques
-    pBarEpochs.update(epoch)
+    # pBarEpochs.update(epoch)
     errMoy = 0
     for i in range(int(len_train/minibatch)): # parcourt chaque minibatch
         z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows)
@@ -100,26 +98,26 @@ for epoch in range(epochs): # Boucle sur les époques
 
     errMoy = errMoy/epochs
 
-    lossFile.addEpochLoss(epoch,loss.item())
+    # lossFile.addEpochLoss(epoch,loss.item())
     writer.add_scalar("Erreur sur l'entraînement par époque ", errMoy, epoch)
 
 
     # Test sur chaque image restante, cad non utilisée pour l'entrainement
-    errTe = fc.Tester(len_train-(len_train%minibatch), cows, crop_size, device, model)
+    errTe = fc.Tester(len_test, cows, crop_size, device, model)
     writer.add_scalar("Erreur sur le test par époque ", errTe, epoch)
 
 
     # Tester sur une image pour visualiser la progression globale :
-    imgATester, mask = fc.PreparationDesDonnees(len_cows-34, 1, crop_size, cows)
+    imgATester, mask = fc.PreparationDesDonnees(len_cows-24, 1, crop_size, cows)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
-    writer.add_image('Image visée', xx, epoch)
+    writer.add_image('c - Image visée', xx, epoch)
     # Prédiction du modèle
     maskPredit = fc.TesterUneImage(imgATester, model, device)
     x = vutils.make_grid(maskPredit, normalize=True, scale_each=True)
-    writer.add_image("Segmentation prédite par le réseau", x, epoch)
+    writer.add_image("a - Segmentation prédite par le réseau", x, epoch)
     # Masque
     y = vutils.make_grid(mask, normalize=True, scale_each=True)
-    writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
+    writer.add_image("b - Masque (segmentation) de l'image visée", y, epoch)
 
 
     ### Fin de l'époque epoch
@@ -136,6 +134,6 @@ print(" ------> Temps de l'apprentissage :", timer, "min.")
 #     torch.save(model.state_dict(), path)
 
 # lossFile.plotLoss()
-lossFile.Close()
+# lossFile.Close()
 
 writer.close()

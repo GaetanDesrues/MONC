@@ -5,12 +5,13 @@ import torch
 import torch.nn.functional as F
 
 
-def Tester(startIndex, cows, crop_size, device, model):
+def Tester(len_test, cows, crop_size, device, model):
     model.eval()
     error = 0
-    nbElem = len(cows) - startIndex - 1
-    for i in range(nbElem):
-        z, zy = PreparationDesDonnees(startIndex+i, 1, crop_size, cows)
+    len_cows = len(cows)
+    for i in range(len_test):
+        z, zy = PreparationDesDonnees(len_cows-i, 1, crop_size, cows)
+        print(len_cows-i)
         X = z.to(device)
         prediction = model(X)
         # zy = CorrigerPixels(zy, crop_size, prediction.shape[2])
@@ -18,7 +19,7 @@ def Tester(startIndex, cows, crop_size, device, model):
         loss = F.cross_entropy(prediction, y)
         error = error + loss.item()
     model.train()
-    return error/nbElem
+    return error/len_test
 
 
 
