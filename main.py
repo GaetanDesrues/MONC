@@ -86,7 +86,7 @@ for epoch in range(epochs): # Boucle sur les époques
         imgATester = prediction[0,:,:,:]
         mask = zy[0:]
         # xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
-        writer.image('d Entrainement '+str(i), xx, epoch)
+        writer.add_image('d Entrainement '+str(i), xx, epoch)
 
 
         # zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
