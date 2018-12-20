@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/'+options.fileName)#exp-29-11-test')
+writer = SummaryWriter('output/runs/Cells/'+options.fileName)#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -94,6 +94,9 @@ for epoch in range(epochs): # Boucle sur les époques
         loss.backward()
         # Modification des poids suivant l'algorithme du gradient choisi
         optim.step()
+
+    xx = vutils.make_grid(prediction, normalize=True, scale_each=True)
+    writer.add_image('Image training', xx, epoch)
 
     errMoy = errMoy/epochs
 
