@@ -83,6 +83,8 @@ for epoch in range(epochs): # Boucle sur les époques
         # Forward
         prediction = model(X) # [N, 2, H, W]
 
+        print(prediction[0,:,30:60,50:80])
+
         imgATester = prediction[0,:,:,:]
         mask = zy[0:]
         xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
