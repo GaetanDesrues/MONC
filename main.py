@@ -31,7 +31,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=1, depth=3, padding=True, up_mode='upsample').to(device)
+model = UNet(in_channels=1, n_classes=2, depth=3, padding=True, up_mode='upsample').to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
@@ -91,7 +91,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
         # imgATester = prediction[0,:,:,:]
         # mask = zy[0:]
-        xx = vutils.make_grid(pred, normalize=True, scale_each=True)
+        xx = vutils.make_grid(pred, normalize=True, scale_each=False, range=(0,255))
         writer.add_image('d Entrainement '+str(i), xx, epoch)
 
 
