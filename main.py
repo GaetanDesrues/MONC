@@ -83,8 +83,11 @@ for epoch in range(epochs): # Boucle sur les époques
         prediction = model(X) # [N, 2, H, W]
 
 
-        haha = prediction
-        print(prediction.shape)
+        # Ajout d'une sigmoide en sortie :
+        mmm = nn.Sigmoid()
+
+        haha = mmm(prediction)
+        # print(prediction.shape)
         min = 0
         max = 0
         for i in range(haha.shape[1]):
