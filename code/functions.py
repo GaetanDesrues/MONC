@@ -57,6 +57,6 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows):
 
 
 def CorrigerPixels(zy, crop_size, predSize):
-    n_pi = (crop_size - predSize)//2
-    zy = zy[:,n_pi:-n_pi,n_pi:-n_pi] # Essayer d'exécuter en commantant pour voir l'erreur
+    # n_pi = (crop_size - predSize)//2
+    # zy = zy[:,n_pi:-n_pi,n_pi:-n_pi] # Essayer d'exécuter en commantant pour voir l'erreur
     return zy
