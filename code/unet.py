@@ -47,7 +47,8 @@ class UNet(nn.Module):
             self.up_path.append(UNetUpBlock(prev_channels, 2**(wf+i), up_mode, padding, batch_norm))
             prev_channels = 2**(wf+i)
 
-        self.last = nn.Conv2d(prev_channels, n_classes, kernel_size=1)
+        self.last = nn.Sigmoid()
+        # nn.Conv2d(prev_channels, n_classes, kernel_size=1)
 
         if (True):
             ### Fichier permettant de vérifier la structure du réseau
