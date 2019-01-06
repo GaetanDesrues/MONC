@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-04')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-05')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -128,8 +128,7 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
     maskPredit = fc.TesterUneImage(imgATester, model, device)
-    print("shape : "+str(maskPredit.shape))
-    x = vutils.make_grid(maskPredit[0,:,:], normalize=True, scale_each=True)
+    x = vutils.make_grid(maskPredit[0,0,:,:], normalize=True, scale_each=True)
     writer.add_image("Segmentation prédite par le réseau", x, epoch)
     # Masque
     y = vutils.make_grid(mask, normalize=True, scale_each=True)
