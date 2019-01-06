@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-09')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-10')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -43,7 +43,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(de
 
 # Optimisateur pour l'algorithme du gradient
 # optim = torch.optim.SGD(model.parameters() , lr=5)
-optim = torch.optim.Adam(model.parameters() , lr=0.001)
+optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
 cows = DataLoader(
@@ -123,7 +123,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Tester sur une image pour visualiser la progression globale :
-    imgATester, mask = fc.PreparationDesDonnees(len_cows-38, 1, crop_size, cows)
+    imgATester, mask = fc.PreparationDesDonnees(len_cows-31, 1, crop_size, cows)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
