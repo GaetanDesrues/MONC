@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-11')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-12')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -42,7 +42,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(de
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters() , lr=0.1, momentum=0.9)
+optim = torch.optim.SGD(model.parameters() , lr=0.5, momentum=0.9)
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
@@ -86,18 +86,18 @@ for epoch in range(epochs): # Boucle sur les époques
         # # Ajout d'une sigmoide en sortie :
         # mmm = torch.nn.Sigmoid()
         #
-        # haha = mmm(prediction)
-        # # print(prediction.shape)
-        # min = 0
-        # max = 0
-        # for i in range(haha.shape[1]):
-        #     for j in range (haha.shape[2]):
-        #         x = haha[4,1,i,j]
-        #         # print(x)
-        #         if x<min: min=x
-        #         if x>max: max=x
-        #
-        # print(min, max)
+        haha = prediction
+        # print(prediction.shape)
+        min = 0
+        max = 0
+        for i in range(haha.shape[1]):
+            for j in range (haha.shape[2]):
+                x = haha[4,1,i,j]
+                # print(x)
+                if x<min: min=x
+                if x>max: max=x
+
+        print(min, max)
 
 
         zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
