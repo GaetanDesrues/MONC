@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-12')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-13')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -42,7 +42,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(de
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters() , lr=0.5, momentum=0.9)
+optim = torch.optim.SGD(model.parameters() , lr=0.2, momentum=0.7)
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
@@ -81,6 +81,7 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
+        prediction = torch.nn.Sigmoid()(prediction)
 
 
         # # Ajout d'une sigmoide en sortie :
