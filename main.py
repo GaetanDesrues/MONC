@@ -84,7 +84,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
         # Ajout d'une sigmoide en sortie :
-        mmm = nn.Sigmoid()
+        mmm = torch.nn.Sigmoid()
 
         haha = mmm(prediction)
         # print(prediction.shape)
