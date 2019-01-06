@@ -1,7 +1,7 @@
-EPOCHS = 40
-MINIBATCH = 15
+EPOCHS = 50
+MINIBATCH = 10
 CROP_SIZE = 256
-LEN_TRAIN = 0.8
+LEN_TRAIN = 0.7
 
 
 train : train.py
