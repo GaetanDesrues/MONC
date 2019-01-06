@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-16')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-17')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -81,7 +81,7 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
-        prediction = torch.nn.Sigmoid()(prediction)
+        # prediction = torch.nn.Sigmoid()(prediction)
 
 
         # # Ajout d'une sigmoide en sortie :
