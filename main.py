@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-06')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-07')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -83,21 +83,21 @@ for epoch in range(epochs): # Boucle sur les époques
         prediction = model(X) # [N, 2, H, W]
 
 
-        # Ajout d'une sigmoide en sortie :
-        mmm = torch.nn.Sigmoid()
-
-        haha = mmm(prediction)
-        # print(prediction.shape)
-        min = 0
-        max = 0
-        for i in range(haha.shape[1]):
-            for j in range (haha.shape[2]):
-                x = haha[4,1,i,j]
-                # print(x)
-                if x<min: min=x
-                if x>max: max=x
-
-        print(min, max)
+        # # Ajout d'une sigmoide en sortie :
+        # mmm = torch.nn.Sigmoid()
+        #
+        # haha = mmm(prediction)
+        # # print(prediction.shape)
+        # min = 0
+        # max = 0
+        # for i in range(haha.shape[1]):
+        #     for j in range (haha.shape[2]):
+        #         x = haha[4,1,i,j]
+        #         # print(x)
+        #         if x<min: min=x
+        #         if x>max: max=x
+        #
+        # print(min, max)
 
 
         zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
@@ -123,12 +123,12 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Tester sur une image pour visualiser la progression globale :
-    imgATester, mask = fc.PreparationDesDonnees(len_cows-34, 1, crop_size, cows)
+    imgATester, mask = fc.PreparationDesDonnees(len_cows-38, 1, crop_size, cows)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
     maskPredit = fc.TesterUneImage(imgATester, model, device)
-    x = vutils.make_grid(maskPredit[0,0,:,:], normalize=True, scale_each=True)
+    x = vutils.make_grid(maskPredit[0,1,:,:], normalize=True, scale_each=True)
     writer.add_image("Segmentation prédite par le réseau", x, epoch)
     # Masque
     y = vutils.make_grid(mask, normalize=True, scale_each=True)
