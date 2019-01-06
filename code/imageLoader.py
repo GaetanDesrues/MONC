@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from PIL import Image, ImageOps
+import torchvision.transforms as transforms
 import numpy as np
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset
@@ -90,17 +91,51 @@ def plplot(img1, img2="", title=""):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+#
+# cows = DataLoader(
+#     "./data/cow_img/",
+#     "./data/cow_mask/",
+#     "cow_",
+#     ".png")
+#
+# cow = cows[10].ExtractAsPIL()
+# print(cow["image"])
+#
+# diCow = cows[10].Resize((256, 256)) # Steven : à changer
+# print(diCow['image'])
+# #
+# imageOriginal = ImageOps.grayscale(diCow['image'])
+# maskOriginal = ImageOps.grayscale(diCow['mask'])
+# print(imageOriginal)
+# print(maskOriginal)
+# # # imageOriginal = diCow['image']
+# # # maskOriginal = diCow['mask']
+# #
+# X = transforms.ToTensor()(imageOriginal)
+# y = transforms.ToTensor()(maskOriginal)
+# print(X.shape)
+# print(y.shape)
+#
+#
+#
+# print("  ")
+#
+#
+# min = 0
+# max = 0
+# X=y
+# for i in range(X.shape[1]):
+#     for j in range (X.shape[2]):
+#         x = X[0,i,j]
+#         if x<min: min=x
+#         if x>max: max=x
+#
+# print(min, max)
+#
+#
+#
+#
+#
 
 
 

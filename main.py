@@ -81,6 +81,22 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
+
+
+        haha = prediction
+        print(prediction.shape)
+        min = 0
+        max = 0
+        for i in range(haha.shape[1]):
+            for j in range (haha.shape[2]):
+                x = haha[4,1,i,j]
+                # print(x)
+                if x<min: min=x
+                if x>max: max=x
+
+        print(min, max)
+
+
         zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
