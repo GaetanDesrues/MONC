@@ -22,7 +22,7 @@ import torchvision.transforms as transforms
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-10')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-11')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -32,7 +32,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, depth=3,
+model = UNet(in_channels=1, n_classes=2, padding=True, depth=2,
     up_mode='upsample', batch_norm=True).to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
@@ -87,8 +87,8 @@ for epoch in range(epochs): # Boucle sur les époques
         # transforms.ToTensor()(prediction.detach().numpy())
         # prediction = torch.nn.Sigmoid()(prediction)
 
-        min, max = fc.recadrage(prediction)
-        print(min, max)
+        # min, max = fc.recadrage(prediction)
+        # print(min, max)
 
 
         zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
