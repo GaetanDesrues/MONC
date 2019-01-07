@@ -22,7 +22,7 @@ import torchvision.transforms as transforms
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-02')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-03')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -32,7 +32,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(device)
+model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample', batch_norm=True).to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
@@ -81,24 +81,12 @@ for epoch in range(epochs): # Boucle sur les époques
         z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
-        prediction = transforms.ToTensor()(model(X).detach().numpy()) # [N, 2, H, W]
+        prediction = model(X) # [N, 2, H, W]
+
+        # transforms.ToTensor()(prediction.detach().numpy())
         # prediction = torch.nn.Sigmoid()(prediction)
 
-
-        # # Ajout d'une sigmoide en sortie :
-        # mmm = torch.nn.Sigmoid()
-        #
-        haha = prediction
-        # print(prediction.shape)
-        min = 0
-        max = 0
-        for i in range(haha.shape[1]):
-            for j in range (haha.shape[2]):
-                x = haha[4,1,i,j]
-                # print(x)
-                if x<min: min=x
-                if x>max: max=x
-
+        min, max = recadraga(prediciton)
         print(min, max)
 
 

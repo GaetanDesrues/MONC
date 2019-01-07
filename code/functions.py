@@ -60,3 +60,27 @@ def CorrigerPixels(zy, crop_size, predSize):
     # n_pi = (crop_size - predSize)//2
     # zy = zy[:,n_pi:-n_pi,n_pi:-n_pi] # Essayer d'exécuter en commantant pour voir l'erreur
     return zy
+
+
+
+def recadrage(image):
+    min = 0
+    max = 0
+    for m in range(image.shape[0]):
+        for i in range(image.shape[1]):
+            for j in range (image.shape[2]):
+                x = image[m,0,i,j]
+                if x<min: min=x
+                if x>max: max=x
+    return min, max
+
+
+
+
+
+
+
+
+
+
+#
