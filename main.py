@@ -86,7 +86,7 @@ for epoch in range(epochs): # Boucle sur les époques
         # transforms.ToTensor()(prediction.detach().numpy())
         # prediction = torch.nn.Sigmoid()(prediction)
 
-        min, max = fc.recadrage(prediciton)
+        min, max = fc.recadrage(prediction)
         print(min, max)
 
 
