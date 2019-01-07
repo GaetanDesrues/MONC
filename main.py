@@ -19,10 +19,10 @@ import torchvision.transforms as transforms
 
 
 #Lecture des options shell
-options = OptionCompilation() #Hahahahaha
+options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-08')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-09')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -114,7 +114,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Tester sur une image pour visualiser la progression globale :
-    imgATester, mask = fc.PreparationDesDonnees(len_cows-31, 1, crop_size, cows)
+    imgATester, mask = fc.PreparationDesDonnees(len_cows-51, 1, crop_size, cows)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
