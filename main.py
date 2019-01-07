@@ -32,7 +32,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, depth=2,
+model = UNet(in_channels=1, n_classes=2, padding=True, depth=3,
     up_mode='upsample', batch_norm=True).to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
@@ -44,7 +44,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, depth=2,
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters() , lr=1.5)
+optim = torch.optim.SGD(model.parameters() , lr=1)
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
@@ -142,8 +142,8 @@ timer = round((fin - debut)/60, 2)
 print(" ------> Temps de l'apprentissage :", timer, "min.")
 
 # if (config['Model']['saveModel']):
-#     path = os.getcwd()+modelSaved
-#     torch.save(model.state_dict(), path)
+path = os.getcwd()+"/output/model/model_7_1.tar"#modelSaved
+torch.save(model.state_dict(), path)
 
 # lossFile.plotLoss()
 lossFile.Close()
