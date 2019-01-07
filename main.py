@@ -22,7 +22,7 @@ import torchvision.transforms as transforms
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-07')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-08')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
