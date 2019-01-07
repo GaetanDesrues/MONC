@@ -15,13 +15,14 @@ from tensorboardX import SummaryWriter
 import torch
 import torch.nn.functional as F
 import torchvision.utils as vutils
+import torchvision.transforms as transforms
 
 
 #Lecture des options shell
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-01')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-02')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -80,7 +81,7 @@ for epoch in range(epochs): # Boucle sur les époques
         z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
-        prediction = model(X) # [N, 2, H, W]
+        prediction = transforms.ToTensor()(model(X)) # [N, 2, H, W]
         # prediction = torch.nn.Sigmoid()(prediction)
 
 
