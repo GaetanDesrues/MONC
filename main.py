@@ -91,12 +91,12 @@ for epoch in range(epochs): # Boucle sur les époques
         # print(min, max)
 
 
-        zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
+        # zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
         LOSS = torch.nn.MSELoss()
         # loss = F.cross_entropy(prediction, y)
-        loss = LOSS(prediction, y)
+        loss = LOSS(prediction[:,1,:,:], y)
         # loss = fc.dice_loss(prediction, y)
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
