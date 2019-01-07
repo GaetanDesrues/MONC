@@ -21,7 +21,7 @@ import torchvision.utils as vutils
 options = OptionCompilation() #Haha
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-18')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-01')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -42,7 +42,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(de
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters() , lr=1)
+optim = torch.optim.SGD(model.parameters() , lr=2)
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
@@ -104,7 +104,8 @@ for epoch in range(epochs): # Boucle sur les époques
         zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
-        loss = F.cross_entropy(prediction, y)
+        # loss = F.cross_entropy(prediction, y)
+        loss = fc.dice_loss(prediction, y)
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
         optim.zero_grad()
@@ -129,8 +130,13 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
     maskPredit = fc.TesterUneImage(imgATester, model, device)
+    x = vutils.make_grid(maskPredit[0,0,:,:], normalize=True, scale_each=True)
+    writer.add_image("Segmentation prédite par le réseau1", x, epoch)
+
+    # maskPredit = fc.TesterUneImage(imgATester, model, device)
     x = vutils.make_grid(maskPredit[0,1,:,:], normalize=True, scale_each=True)
-    writer.add_image("Segmentation prédite par le réseau", x, epoch)
+    writer.add_image("Segmentation prédite par le réseau2", x, epoch)
+
     # Masque
     y = vutils.make_grid(mask, normalize=True, scale_each=True)
     writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
