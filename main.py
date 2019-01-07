@@ -15,10 +15,11 @@ from tensorboardX import SummaryWriter
 import torch
 import torch.nn.functional as F
 import torchvision.utils as vutils
+import torchvision.transforms as transforms
 
 
 #Lecture des options shell
-options = OptionCompilation() #Haha25252525
+options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
 writer = SummaryWriter('output/runs/test-02')#exp-29-11-test')
@@ -31,7 +32,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(device)
+model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample', batch_norm=True).to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
@@ -42,8 +43,8 @@ model = UNet(in_channels=1, n_classes=2, padding=True, up_mode='upsample').to(de
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters() , lr=1)
-# optim = torch.optim.Adam(model.parameters() , lr=0.0001)
+optim = torch.optim.SGD(model.parameters() , lr=1.5)
+# optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
 cows = DataLoader(
@@ -81,10 +82,19 @@ for epoch in range(epochs): # Boucle sur les époques
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
+
+        # transforms.ToTensor()(prediction.detach().numpy())
+        # prediction = torch.nn.Sigmoid()(prediction)
+
+        min, max = fc.recadrage(prediction)
+        print(min, max)
+
+
         zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
         loss = F.cross_entropy(prediction, y)
+        # loss = fc.dice_loss(prediction, y)
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
         optim.zero_grad()
@@ -104,13 +114,18 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Tester sur une image pour visualiser la progression globale :
-    imgATester, mask = fc.PreparationDesDonnees(len_cows-34, 1, crop_size, cows)
+    imgATester, mask = fc.PreparationDesDonnees(len_cows-51, 1, crop_size, cows)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
     maskPredit = fc.TesterUneImage(imgATester, model, device)
-    x = vutils.make_grid(maskPredit, normalize=True, scale_each=True)
-    writer.add_image("Segmentation prédite par le réseau", x, epoch)
+    x = vutils.make_grid(maskPredit[0,0,:,:], normalize=True, scale_each=True)
+    writer.add_image("Segmentation prédite par le réseau1", x, epoch)
+
+    # maskPredit = fc.TesterUneImage(imgATester, model, device)
+    x = vutils.make_grid(maskPredit[0,1,:,:], normalize=True, scale_each=True)
+    writer.add_image("Segmentation prédite par le réseau2", x, epoch)
+
     # Masque
     y = vutils.make_grid(mask, normalize=True, scale_each=True)
     writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
