@@ -19,7 +19,7 @@ import torchvision.transforms as transforms
 
 
 #Lecture des options shell
-options = OptionCompilation() #Haha
+options = OptionCompilation() #Hahahahaha
 
 # TensorBoardX pour les visualisations
 writer = SummaryWriter('output/runs/test-08')#exp-29-11-test')
