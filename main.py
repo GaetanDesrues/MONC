@@ -22,7 +22,7 @@ import torchvision.transforms as transforms
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-11')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-12')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -44,7 +44,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, depth=3,
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters() , lr=1)
+optim = torch.optim.SGD(model.parameters() , lr=1.5)
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
@@ -94,7 +94,9 @@ for epoch in range(epochs): # Boucle sur les époques
         zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
-        loss = F.cross_entropy(prediction, y)
+        LOSS = nn.MSELoss()
+        # loss = F.cross_entropy(prediction, y)
+        loss = LOSS(prediction, y)
         # loss = fc.dice_loss(prediction, y)
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
