@@ -81,7 +81,7 @@ for epoch in range(epochs): # Boucle sur les époques
         z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
-        prediction = transforms.ToTensor()(model(X)) # [N, 2, H, W]
+        prediction = transforms.ToTensor()(model(X).numpy()) # [N, 2, H, W]
         # prediction = torch.nn.Sigmoid()(prediction)
 
 
