@@ -104,8 +104,8 @@ for epoch in range(epochs): # Boucle sur les époques
         zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
-        # loss = F.cross_entropy(prediction, y)
-        loss = fc.dice_loss(prediction, y)
+        loss = F.cross_entropy(prediction, y)
+        # loss = fc.dice_loss(prediction, y)
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
         optim.zero_grad()
