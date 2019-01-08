@@ -134,9 +134,9 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
 
 
-    img, _ = fc.PreparationDesDonnees(len_cows-80, 1, crop_size, cows)
-    img = vutils.make_grid(img, normalize=True, scale_each=True)
+    img, mask = fc.PreparationDesDonnees(len_cows-80, 1, crop_size, cows)
     mask = fc.TesterUneImage(img, model, device)
+    img = vutils.make_grid(img, normalize=True, scale_each=True)
     mask = vutils.make_grid(mask, normalize=True, scale_each=True)
     writer.add_image("Image", img, epoch)
     writer.add_image("Prediction", mask, epoch)
