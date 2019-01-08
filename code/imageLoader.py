@@ -59,6 +59,7 @@ class DataLoader(Dataset):
         return len(os.listdir(self.dir_img))
 
     def __getitem__(self,i):
+        if (i == len(os.listdir(self.dir_img))-1): print("Hehehe")
         return Data(self.dir_img, self.dir_mask, self.file+str(i), self.extension)
 
     def Plot(self,i): # Visualiser une image et son mask

@@ -22,7 +22,7 @@ import torchvision.transforms as transforms
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-22')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-23')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -32,8 +32,8 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, depth=5,
-    up_mode='upsample', batch_norm=True).to(device)
+model = UNet(in_channels=1, n_classes=2, padding=True, depth=4,
+    up_mode='upconv', batch_norm=True).to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
@@ -56,13 +56,19 @@ cows = DataLoader(
 
 
 # Taille totale du dataset
-len_cows = len(cows)
+len_cows = len(cows)-1
+seuleToute = cows[len_cows]
 print("len : "+str(len_cows))
 
 epochs = options.epochs
 len_train = int(float(options.lengthtrain) * len_cows)
 crop_size = options.cropsize
 minibatch = options.minibatch
+
+# Une image non utilisée pour tester :
+diCow = seuleToute.Resize((crop_size, crop_size))
+imageOriginal = ImageOps.grayscale(diCow['image'])
+seuleToute[0:] = transforms.ToTensor()(imageOriginal)
 
 model.train()
 
@@ -134,11 +140,10 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
 
 
-    img, mask = fc.PreparationDesDonnees(len_cows-78, 1, crop_size, cows)
-    mask = fc.TesterUneImage(img, model, device)
-    img = vutils.make_grid(img, normalize=True, scale_each=True)
+    mask = fc.TesterUneImage(seuleToute, model, device)
+    seuleToute = vutils.make_grid(seuleToute[0:], normalize=True, scale_each=True)
     mask = vutils.make_grid(mask[0,1,:,:], normalize=True, scale_each=True)
-    writer.add_image("Image", img, epoch)
+    writer.add_image("Image", seuleToute, epoch)
     writer.add_image("Prediction", mask, epoch)
 
 
