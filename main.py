@@ -121,7 +121,7 @@ for epoch in range(epochs): # Boucle sur les époques
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
-    # maskPredit = fc.TesterUneImage(imgATester, model, device)
+    maskPredit = fc.TesterUneImage(imgATester, model, device)
     # x = vutils.make_grid(maskPredit[0,0,:,:], normalize=True, scale_each=True)
     # writer.add_image("Segmentation prédite par le réseau1", x, epoch)
 
