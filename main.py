@@ -22,7 +22,7 @@ import torchvision.transforms as transforms
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-18')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-19')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -44,7 +44,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, depth=3,
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters() , lr=0.05)
+optim = torch.optim.SGD(model.parameters() , lr=0.01)
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
@@ -132,6 +132,12 @@ for epoch in range(epochs): # Boucle sur les époques
     # Masque
     y = vutils.make_grid(mask, normalize=True, scale_each=True)
     writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
+
+
+    img, _ = fc.PreparationDesDonnees(len_cows-80, 1, crop_size, cows)
+    mask = fc.TesterUneImage(img, model, device)
+    writer.add_image("Image", img, epoch)
+    writer.add_image("Prediction", mask, epoch)
 
 
     ### Fin de l'époque epoch
