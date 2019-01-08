@@ -121,23 +121,23 @@ for epoch in range(epochs): # Boucle sur les époques
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
-    maskPredit = fc.TesterUneImage(imgATester, model, device)
-    x = vutils.make_grid(maskPredit[0,0,:,:], normalize=True, scale_each=True)
-    writer.add_image("Segmentation prédite par le réseau1", x, epoch)
+    # maskPredit = fc.TesterUneImage(imgATester, model, device)
+    # x = vutils.make_grid(maskPredit[0,0,:,:], normalize=True, scale_each=True)
+    # writer.add_image("Segmentation prédite par le réseau1", x, epoch)
 
     # maskPredit = fc.TesterUneImage(imgATester, model, device)
     x = vutils.make_grid(maskPredit[0,1,:,:], normalize=True, scale_each=True)
-    writer.add_image("Segmentation prédite par le réseau2", x, epoch)
+    writer.add_image("Segmentation prédite par le réseau", x, epoch)
 
     # Masque
     y = vutils.make_grid(mask, normalize=True, scale_each=True)
     writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
 
 
-    img, mask = fc.PreparationDesDonnees(len_cows-80, 1, crop_size, cows)
+    img, mask = fc.PreparationDesDonnees(len_cows-78, 1, crop_size, cows)
     mask = fc.TesterUneImage(img, model, device)
     img = vutils.make_grid(img, normalize=True, scale_each=True)
-    mask = vutils.make_grid(mask, normalize=True, scale_each=True)
+    mask = vutils.make_grid(mask[0,1,:,:], normalize=True, scale_each=True)
     writer.add_image("Image", img, epoch)
     writer.add_image("Prediction", mask, epoch)
 
