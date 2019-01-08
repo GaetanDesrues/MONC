@@ -16,6 +16,7 @@ import torch
 import torch.nn.functional as F
 import torchvision.utils as vutils
 import torchvision.transforms as transforms
+from PIL import Image, ImageOps
 
 
 #Lecture des options shell
