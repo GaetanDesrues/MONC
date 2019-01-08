@@ -68,7 +68,8 @@ minibatch = options.minibatch
 
 # Une image non utilisée pour tester :
 diCow = seuleToute.Resize((crop_size, crop_size))
-imageOriginal = ImageOps.grayscale(diCow['image'])
+seuleToute = diCow['image']
+imageOriginal = ImageOps.grayscale(seuleToute)
 seuleToute[0:] = transforms.ToTensor()(imageOriginal)
 
 model.train()
