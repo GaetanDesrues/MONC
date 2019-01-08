@@ -71,6 +71,7 @@ diCow = seuleToute.Resize((crop_size, crop_size))
 seuleToute = diCow['image']
 imageOriginal = ImageOps.grayscale(seuleToute)
 seuleToute = transforms.ToTensor()(imageOriginal)
+print(seuleToute.shape)
 
 model.train()
 
@@ -143,6 +144,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     imgg = torch.Tensor(1,1,crop_size,crop_size).zero_()
+    print(seuleToute.shape)
     imgg[0:] = seuleToute
     mask = fc.TesterUneImage(imgg, model, device)
     seuleToute = vutils.make_grid(seuleToute, normalize=True, scale_each=True)
