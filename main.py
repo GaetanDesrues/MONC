@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-23')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-24')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -34,7 +34,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
 model = UNet(in_channels=1, n_classes=2, padding=True, depth=4,
-    up_mode='upconv', batch_norm=True).to(device)
+    up_mode='upsample', batch_norm=True).to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
 # if (bool(config['Model']['saveModel'])):
