@@ -142,6 +142,7 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
 
 
+    imgg = torch.zeros(0,:,:,:)
     imgg[0:] = seuleToute
     mask = fc.TesterUneImage(imgg, model, device)
     seuleToute = vutils.make_grid(seuleToute, normalize=True, scale_each=True)
