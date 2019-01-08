@@ -70,7 +70,7 @@ minibatch = options.minibatch
 diCow = seuleToute.Resize((crop_size, crop_size))
 seuleToute = diCow['image']
 imageOriginal = ImageOps.grayscale(seuleToute)
-seuleToute[0:] = transforms.ToTensor()(imageOriginal)
+seuleToute = transforms.ToTensor()(imageOriginal)
 
 model.train()
 
@@ -142,8 +142,9 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Masque (segmentation) de l'image visée", y, epoch)
 
 
-    mask = fc.TesterUneImage(seuleToute, model, device)
-    seuleToute = vutils.make_grid(seuleToute[0:], normalize=True, scale_each=True)
+    imgg[0:] = seuleToute
+    mask = fc.TesterUneImage(imgg, model, device)
+    seuleToute = vutils.make_grid(seuleToute, normalize=True, scale_each=True)
     mask = vutils.make_grid(mask[0,1,:,:], normalize=True, scale_each=True)
     writer.add_image("Image", seuleToute, epoch)
     writer.add_image("Prediction", mask, epoch)
