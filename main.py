@@ -145,6 +145,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
     imgg = torch.Tensor(1,1,crop_size,crop_size).zero_()
     print(seuleToute.shape)
+    seuleToute = seuleToute[0,:,:]
     imgg[0:] = seuleToute
     mask = fc.TesterUneImage(imgg, model, device)
     seuleToute = vutils.make_grid(seuleToute, normalize=True, scale_each=True)
