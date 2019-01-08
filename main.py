@@ -22,7 +22,7 @@ import torchvision.transforms as transforms
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-12')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-13')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -44,7 +44,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, depth=3,
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters() , lr=2)
+optim = torch.optim.SGD(model.parameters() , lr=0.1)
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
@@ -144,7 +144,7 @@ timer = round((fin - debut)/60, 2)
 print(" ------> Temps de l'apprentissage :", timer, "min.")
 
 # if (config['Model']['saveModel']):
-path = os.getcwd()+"/output/model/model_7_1.tar"#modelSaved
+path = os.getcwd()+"/output/model/model_8_1.tar"#modelSaved
 torch.save(model.state_dict(), path)
 
 # lossFile.plotLoss()
