@@ -48,13 +48,14 @@ class Data():
 
 # Options de compilation
 # options = OptionCompilation()
-modelSaved = "/../../model/model_23.tar"#options.modelPath
+modelSaved = "/ModelPlafrim/model_20e.tar"#options.modelPath
 imgPath = "./vache.png"#options.targetPath
 diCow = Data(imgPath)
 vache = diCow.Resize((256, 256))["image"]
 
 model = UNet(in_channels=1, n_classes=2, padding=True, depth=4,
     up_mode='upsample', batch_norm=True)
+model.eval()
 
 
 # Calcul de la prediction du réseau
@@ -62,7 +63,6 @@ if (not os.path.isfile(os.getcwd()+modelSaved)):
     print("Attention : le modèle n'existe pas !")
 else:
     model.load_state_dict(torch.load(os.getcwd()+modelSaved, map_location='cpu'))
-    model.eval()
 
     img = torch.Tensor(1,1,256,256).zero_()
     img = PreparationDesDonnees(vache, 256)

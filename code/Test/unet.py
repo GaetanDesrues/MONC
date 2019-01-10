@@ -5,22 +5,30 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from tensorboardX import SummaryWriter
+import torchvision.utils as vutils
+
+global writer, bl
+writer = (SummaryWriter('./runs/test-20e'))
+bl = -1
+
+def Hook(self, input, output):
+    global writer, bl
+    bl = bl+1
+
+    chan = output.shape[1]
+    for m in range(chan):
+        img = vutils.make_grid(output[0,m,:,:], normalize=True, scale_each=True)
+        writer.add_image("Block "+self.__class__.__name__+"-"+str(bl), img, m)
 
 
-def CarteActivation(self, input, output):
-    # input is a tuple of packed inputs
-    # output is a Tensor. output.data is the Tensor we are interested
-    print('Inside ' + self.__class__.__name__ + ' forward')
-    print('')
-    print('input: ', type(input))
-    print('input[0]: ', type(input[0]))
-    print('output: ', type(output))
-    print('')
-    print('input size:', input[0].size())
-    print('output size:', output.data.size())
-    print('output norm:', output.data.norm())
 
-    # writer = SummaryWriter('../../output/runs/carteActivation')
+
+
+    # print('Inside ' + self.__class__.__name__)
+    # print('output size:', output.data.size())
+    # print('output norm:', output.data.norm())
+
+    # writer = SummaryWriter('../../output/runs/CA')
     # writer.close()
 
 
@@ -99,13 +107,14 @@ class UNet(nn.Module):
     def forward(self, x):
         blocks = []
         for i, down in enumerate(self.down_path):
+            down.register_forward_hook(Hook)
             x = down(x)
-            down.register_forward_hook(CarteActivation)
             if i != len(self.down_path)-1:
                 blocks.append(x) # Sauvegarde du "bridge" "copy and crop"
                 x = F.avg_pool2d(x, 2)
 
         for i, up in enumerate(self.up_path):
+            up.register_forward_hook(Hook)
             x = up(x, blocks[-i-1]) # On rappelle l'image obtenue à la descente
 
         return self.last(x)
