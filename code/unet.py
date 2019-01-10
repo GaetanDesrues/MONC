@@ -4,6 +4,32 @@
 import torch
 from torch import nn
 import torch.nn.functional as F
+from tensorboardX import SummaryWriter
+
+
+def CarteActivation(self, input, output):
+    # input is a tuple of packed inputs
+    # output is a Tensor. output.data is the Tensor we are interested
+    # print('Inside ' + self.__class__.__name__ + ' forward')
+    # print('')
+    # print('input: ', type(input))
+    # print('input[0]: ', type(input[0]))
+    # print('output: ', type(output))
+    # print('')
+    # print('input size:', input[0].size())
+    # print('output size:', output.data.size())
+    # print('output norm:', output.data.norm())
+
+    writer = SummaryWriter('output/runs/carteActivation')
+
+
+
+
+
+    writer.add_image(str(), img, 1)
+    writer.close()
+
+
 
 class UNet(nn.Module):
     def __init__(self, in_channels=1, n_classes=2, depth=5, wf=6, padding=False,
@@ -80,6 +106,7 @@ class UNet(nn.Module):
         blocks = []
         for i, down in enumerate(self.down_path):
             x = down(x)
+            down.register_forward_hook(CarteActivation)
             if i != len(self.down_path)-1:
                 blocks.append(x) # Sauvegarde du "bridge" "copy and crop"
                 x = F.avg_pool2d(x, 2)
@@ -88,22 +115,6 @@ class UNet(nn.Module):
             x = up(x, blocks[-i-1]) # On rappelle l'image obtenue à la descente
 
         return self.last(x)
-
-
-def printnorm(self, input, output):
-    # input is a tuple of packed inputs
-    # output is a Tensor. output.data is the Tensor we are interested
-    print('Inside ' + self.__class__.__name__ + ' forward')
-    print('')
-    print('input: ', type(input))
-    print('input[0]: ', type(input[0]))
-    print('output: ', type(output))
-    print('')
-    print('input size:', input[0].size())
-    print('output size:', output.data.size())
-    print('output norm:', output.data.norm())
-
-
 
 
 class UNetConvBlock(nn.Module):
@@ -118,7 +129,7 @@ class UNetConvBlock(nn.Module):
             block.append(nn.BatchNorm2d(out_size))
 
         block.append(nn.Conv2d(out_size, out_size, kernel_size=3,
-                               padding=int(padding))..register_forward_hook(printnorm))
+                               padding=int(padding)))
         block.append(nn.ReLU())
         if batch_norm:
             block.append(nn.BatchNorm2d(out_size))
