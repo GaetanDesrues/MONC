@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-25')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-26')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
