@@ -41,6 +41,24 @@ class Data():
         mask = mask.resize(size, Image.LANCZOS)
         return {'image' : img, 'mask' : mask}
 
+
+    def Rotation(self, degree):
+        img = self.ExtractAsPIL()['image']
+        mask = self.ExtractAsPIL()['mask']
+        img = img.rotate(degree)
+        mask = mask.rotate(degree)
+        return {'image' : img, 'mask' : mask}
+
+    def RandomCrop(self, size):
+        img = self.ExtractAsPIL()['image']
+        mask = self.ExtractAsPIL()['mask']
+        box = (128, 128, size, size)
+        img = img.crop(box)
+        mask = mask.crop(box)
+        img = img.resize(size, Image.LANCZOS)
+        mask = mask.resize(size, Image.LANCZOS)
+        return {'image' : img, 'mask' : mask}
+
     def Pil2Np(self):
         return np.array(self)
 
