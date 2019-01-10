@@ -49,7 +49,7 @@ class UNet(nn.Module):
 
         self.last = nn.Conv2d(prev_channels, n_classes, kernel_size=1)
 
-        if (True):
+        if (False):
             ### Fichier permettant de vérifier la structure du réseau
             # Attention les doublons, les maxpool ne sont pas affichés --> lire la doc
             f=open("output/logBlocs.txt","w")

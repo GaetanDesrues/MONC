@@ -55,6 +55,7 @@ cows = DataLoader(
     config['Model']['file'],
     config['Model']['extension'])
 
+# Augementation des données
 
 # Taille totale du dataset
 len_cows = len(cows)-1

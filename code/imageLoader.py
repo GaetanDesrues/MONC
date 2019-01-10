@@ -37,6 +37,7 @@ class Data():
     def Resize(self, size):
         img = self.ExtractAsPIL()['image']
         mask = self.ExtractAsPIL()['mask']
+
         img = img.resize(size, Image.LANCZOS)
         mask = mask.resize(size, Image.LANCZOS)
         return {'image' : img, 'mask' : mask}
