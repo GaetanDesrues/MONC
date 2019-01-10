@@ -90,6 +90,22 @@ class UNet(nn.Module):
         return self.last(x)
 
 
+def printnorm(self, input, output):
+    # input is a tuple of packed inputs
+    # output is a Tensor. output.data is the Tensor we are interested
+    print('Inside ' + self.__class__.__name__ + ' forward')
+    print('')
+    print('input: ', type(input))
+    print('input[0]: ', type(input[0]))
+    print('output: ', type(output))
+    print('')
+    print('input size:', input[0].size())
+    print('output size:', output.data.size())
+    print('output norm:', output.data.norm())
+
+
+
+
 class UNetConvBlock(nn.Module):
     def __init__(self, in_size, out_size, padding, batch_norm):
         super(UNetConvBlock, self).__init__()
@@ -102,7 +118,7 @@ class UNetConvBlock(nn.Module):
             block.append(nn.BatchNorm2d(out_size))
 
         block.append(nn.Conv2d(out_size, out_size, kernel_size=3,
-                               padding=int(padding)))
+                               padding=int(padding))..register_forward_hook(printnorm))
         block.append(nn.ReLU())
         if batch_norm:
             block.append(nn.BatchNorm2d(out_size))
