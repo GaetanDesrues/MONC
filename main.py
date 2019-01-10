@@ -165,7 +165,7 @@ timer = round((fin - debut)/60, 2)
 print(" ------> Temps de l'apprentissage :", timer, "min.")
 
 # if (config['Model']['saveModel']):
-path = os.getcwd()+"/output/model/model_23.tar"#modelSaved
+path = os.getcwd()+"/output/model/model_5e.tar"#modelSaved
 torch.save(model.state_dict(), path)
 
 # lossFile.plotLoss()
