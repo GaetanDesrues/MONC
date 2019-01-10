@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-27')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-28')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -72,7 +72,7 @@ diCow = seuleToute.Resize((crop_size, crop_size))
 seuleToute = diCow['image']
 imageOriginal = ImageOps.grayscale(seuleToute)
 seuleToute = transforms.ToTensor()(imageOriginal)
-print(seuleToute.shape)
+# print(seuleToute.shape)
 
 model.train()
 
@@ -145,7 +145,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     imgg = torch.Tensor(1,1,crop_size,crop_size).zero_()
-    print(seuleToute.shape)
+    # print(seuleToute.shape)
     seuleToute = seuleToute[0,:,:]
     imgg[0:] = seuleToute
     mask = fc.TesterUneImage(imgg, model, device)
@@ -165,7 +165,7 @@ timer = round((fin - debut)/60, 2)
 print(" ------> Temps de l'apprentissage :", timer, "min.")
 
 # if (config['Model']['saveModel']):
-path = os.getcwd()+"/output/model/model_10e.tar"#modelSaved
+path = os.getcwd()+"/output/model/model_15e.tar"#modelSaved
 torch.save(model.state_dict(), path)
 
 # lossFile.plotLoss()
