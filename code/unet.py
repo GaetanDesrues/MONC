@@ -133,6 +133,7 @@ class UNetUpBlock(nn.Module):
 
     def forward(self, x, bridge):
         up = self.up(x)
+	#print (x.size)
         crop1 = self.center_crop(bridge, up.shape[2:]) # crop1.shape = [N, C, H, W]
         # Concaténation suivant la direction 1 :
         # on rajoute 1 channel correspondant à l'image telle qu'elle était lors de la descente
