@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-28')#exp-29-11-test')
+writer = SummaryWriter('output/runs/test-29')#exp-29-11-test')
 # arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
 
 # Charge le fichier de configurations
@@ -165,7 +165,7 @@ timer = round((fin - debut)/60, 2)
 print(" ------> Temps de l'apprentissage :", timer, "min.")
 
 # if (config['Model']['saveModel']):
-path = os.getcwd()+"/output/model/model_15e.tar"#modelSaved
+path = os.getcwd()+"/output/model/model_20e.tar"#modelSaved
 torch.save(model.state_dict(), path)
 
 # lossFile.plotLoss()
