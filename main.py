@@ -6,6 +6,7 @@ from code.imageLoader import DataLoader, Data
 from code.lossFiles import LossFile as LossModule
 from code.optionCompil import OptionCompilation
 import code.functions as fc
+import code.loss as EssaiLoss
 import os
 import time
 import configparser
@@ -105,7 +106,9 @@ for epoch in range(epochs): # Boucle sur les époques
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
         # LOSS = torch.nn.MSELoss()
-        loss = F.cross_entropy(prediction, y)
+        # loss = F.cross_entropy(prediction, y)
+
+        loss = EssaiLoss.dice_loss(prediction, y)
         # loss = LOSS(prediction[:,1,:,:], y)
         # loss = fc.dice_loss(prediction, y)
         errMoy = errMoy + loss.item()
