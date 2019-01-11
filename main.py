@@ -108,7 +108,7 @@ for epoch in range(epochs): # Boucle sur les époques
         # LOSS = torch.nn.MSELoss()
         # loss = F.cross_entropy(prediction, y)
 
-        loss = EssaiLoss.dice_loss(prediction, y)
+        loss = EssaiLoss.dice_loss2(y, prediction)
         # loss = LOSS(prediction[:,1,:,:], y)
         # loss = fc.dice_loss(prediction, y)
         errMoy = errMoy + loss.item()
