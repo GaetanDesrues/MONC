@@ -125,7 +125,8 @@ def dice_loss2(true, logits, eps=1e-7):
         probas = F.softmax(logits, dim=1)
     dims = (0,) + tuple(range(2, true.ndimension()))
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    tens = (probas * true_1_hot).to(device)
+    tens = probas * true_1_hot
+    tens = tens.to(device)
     intersection = torch.sum(tens, dims)
     cardinality = torch.sum(probas + true_1_hot, dims)
     dice_loss = (2. * intersection / (cardinality + eps)).mean()
