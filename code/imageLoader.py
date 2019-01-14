@@ -58,6 +58,13 @@ class Data():
         mask = mask.transpose(Image.FLIP_LEFT_RIGHT)
         return {'image' : img, 'mask' : mask}
 
+    def Blur(self):
+        img = self.ExtractAsPIL()['image']
+        mask = self.ExtractAsPIL()['mask']
+        img = img.filter(ImageFilter.BLUR)
+        mask = mask.filter(ImageFilter.BLUR)
+        return {'image' : img, 'mask' : mask}
+
     def RandomCrop(self):
         img = self.ExtractAsPIL()['image']
         mask = self.ExtractAsPIL()['mask']
