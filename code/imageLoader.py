@@ -87,20 +87,19 @@ class Data():
 
 # Représente l'ensemble du dataset
 class DataLoader(Dataset):
-    def __init__(self,dir_img,dir_mask,file,extension,transform=None):
+    def __init__(self,dir_img,dir_mask,file,extension):
         self.dir_img=dir_img
         self.dir_mask=dir_mask
         self.file=file
         self.extension=extension
-        self.transform =transform
+
 
     def __len__(self):
         return len(os.listdir(self.dir_img))
 
     def __getitem__(self,i):
-
         # if (i == len(os.listdir(self.dir_img))-1): print("Hehehe")
-        return Data(self.dir_img, self.dir_mask, self.file+str(i), self.extension, self.transform)
+        return Data(self.dir_img, self.dir_mask, self.file+str(i), self.extension)
 
     def Plot(self,i): # Visualiser une image et son mask
         sample=self[i]

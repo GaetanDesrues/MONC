@@ -32,12 +32,13 @@ def TesterUneImage(img, model, device):
 
 
 
-def PreparationDesDonnees(i, minibatch, crop_size, cows):
+def PreparationDesDonnees(i, minibatch, crop_size, cows,a):
     z = torch.Tensor(minibatch,1,crop_size,crop_size).zero_() # 1:in_channels
     zy = torch.Tensor(minibatch,crop_size,crop_size).zero_()
 
     for m in range(minibatch): # On parcourt le training set batch par batch
         cow_i = cows[i+m+1]
+        
         diCow = cow_i.Resize((crop_size, crop_size)) # Steven : à changer
 
         imageOriginal = ImageOps.grayscale(diCow['image'])
