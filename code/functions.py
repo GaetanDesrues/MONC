@@ -32,21 +32,24 @@ def TesterUneImage(img, model, device):
 
 
 
-def PreparationDesDonnees(i, minibatch, crop_size, cows,a):
+def PreparationDesDonnees(i, minibatch, crop_size, cows, a):
     z = torch.Tensor(minibatch,1,crop_size,crop_size).zero_() # 1:in_channels
     zy = torch.Tensor(minibatch,crop_size,crop_size).zero_()
 
     for m in range(minibatch): # On parcourt le training set batch par batch
-        cow_i = cows[i+m+1]
+        diCow = cows[(i*minibatch)+m]
+
         if a==1: cows.Rotation(uniform(1,180))
         elif a==2: cows.SymmetryLeftRight()
         elif a==3: cows.RandomCrop()
-        diCow = cow_i.Resize((crop_size, crop_size)) # Steven : à changer
 
-        imageOriginal = ImageOps.grayscale(diCow['image'])
-        maskOriginal = ImageOps.grayscale(diCow['mask'])
-        # imageOriginal = diCow['image']
-        # maskOriginal = diCow['mask']
+        # diCow = cow_i.Resize((crop_size, crop_size)) # Steven : à changer
+
+        imageOriginal = diCow["image"].resize((crop_size, crop_size), Image.LANCZOS)
+        maskOriginal = diCow["mask"].resize((crop_size, crop_size), Image.LANCZOS)
+
+        imageOriginal = ImageOps.grayscale(imageOriginal)
+        maskOriginal = ImageOps.grayscale(maskOriginal)
 
         X = transforms.ToTensor()(imageOriginal)
         y = transforms.ToTensor()(maskOriginal)
