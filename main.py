@@ -124,7 +124,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Tester sur une image pour visualiser la progression globale :
-    imgATester, mask = fc.PreparationDesDonnees(len_cows-51, 1, crop_size, cows)
+    imgATester, mask = fc.PreparationDesDonnees(len_cows-51, 1, crop_size, cows, 0)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
