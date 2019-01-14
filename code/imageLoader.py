@@ -180,6 +180,72 @@ def plplot(img1, img2="", title=""):
 
 
 
+def listData(path):
+    # Crée un fichier lD.txt qui regroupe les chemins de tous les couples image+mask
+    lec_data = os.system("ls -R "+path+" > listeData.txt")
+    if (lec_data != 0):
+        print("Mauvaise lecture des données.")
+    else:
+        ld = open("listeData.txt", "r")
+        ld2 = open("lD.txt", "w")
+
+        liste = ld.read().split("\n")
+        dossier = "None"
+        nb = 0
+
+        for i, valeur in enumerate(liste):
+            dossierTrouve = valeur.find(path)
+            if (dossierTrouve == 0):
+                dossier = valeur[len(path)+1 : -1]
+            elif (dossier != "None"):
+                if (valeur.find("image") == 0):
+                    nb = nb + 1
+                    ld2.write(path+"/"+dossier+"/"+valeur+"  "+path+"/"+dossier+"/"+valeur.replace("image","mask")+"\n")
+        print(str(nb)+" fichiers")
+        ld.close()
+        ld2.close()
+
+
+
+
+class DataSample():
+    def __init__(self, path):
+        # Crée un fichier listeData.txt qui regroupe les chemins de tous les couples image+mask
+        lec_data = os.system("ls -R "+path+" > lD.txt")
+        if (lec_data != 0):
+            print("Mauvaise lecture des données.")
+        else:
+            ld = open("lD.txt", "r")
+            liste = ld.read().split("\n")
+            dossier = "None"
+            self.nb = 0
+            self.files = []
+
+            for valeur in liste:
+                dossierTrouve = valeur.find(path)
+                if (dossierTrouve == 0):
+                    dossier = valeur[len(path)+1 : -1]
+                elif (dossier != "None"):
+                    if (valeur.find("image") == 0):
+                        self.nb = self.nb + 1
+                        self.files.append(path+" "+dossier+" "+valeur+"\n")
+            # print(str(self.nb)+" fichiers")
+
+            ld.close()
+            os.system("rm lD.txt")
+
+    def __len__(self):
+        return self.nb
+
+
+    def __getitem__(self, lig):
+        path, dossier, id = self.files[lig].split(" ")
+
+        img = Image.open(path+"/"+dossier+"/"+id.replace("\n",""))
+        mas = Image.open(path+"/"+dossier+"/"+id.replace("image_", "mask_").replace("\n",""))
+
+        return {"image" : img, "mask" : mas}
+
 
 
 #

@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from code.unet import UNet
-from code.imageLoader import DataLoader, Data
-from code.lossFiles import LossFile as LossModule
+from code.imageLoader import DataLoader, Data, DataSample
 from code.optionCompil import OptionCompilation
 import code.functions as fc
 import code.loss as EssaiLoss
@@ -24,8 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/test-31')#exp-29-11-test')
-# arg : Rien pour le nom par défaut, comment='txt' pour ajouter un com à la fin
+writer = SummaryWriter('output/runs/cell-01')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -50,25 +48,28 @@ optim = torch.optim.SGD(model.parameters(), lr=0.005)# lr_scheduler
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
-cows = DataLoader(
-    config['Model']['imgPath'],
-    config['Model']['maskPath'],
-    config['Model']['file'],
-    config['Model']['extension'])
+# cows = DataLoader(
+#     config['Model']['imgPath'],
+#     config['Model']['maskPath'],
+#     config['Model']['file'],
+#     config['Model']['extension'])
+cows = DataSample("./data/MMK")
 
-# Augementation des données
 
-# Taille totale du dataset
+# Définition des tailles
 len_cows = len(cows)-1
-seuleToute = cows[len_cows]
-print("len : "+str(len_cows))
-
 epochs = options.epochs
-len_train = int(float(options.lengthtrain) * len_cows)
-crop_size = options.cropsize
 minibatch = options.minibatch
+crop_size = options.cropsize
+len_train = int(float(options.lengthtrain) * len_cows)
+len_train =  len_train - (len_train%minibatch)
+len_test = len_cows - len_train
+print("Taille du dataset : "+str(len_cows))
+print("Taille du training set : "+str(len_train))
+print("Taille du test set : "+str(len_test))
 
 # Une image non utilisée pour tester :
+seuleToute = cows[len_cows]
 diCow = seuleToute.Resize((crop_size, crop_size))
 seuleToute = diCow['image']
 imageOriginal = ImageOps.grayscale(seuleToute)
@@ -79,9 +80,6 @@ model.train()
 
 # erreurMiniBatch = []
 # erreurEpoch = []
-
-# Définition du fichier d'erreurs argument=nom du fichier à aller cherche dans config
-lossFile = LossModule(str(config['Train']['lossFile']))
 
 pBarEpochs = ProgressBar(widgets = ['Epoques : ', SimpleProgress(), '   ', Bar()], maxval = epochs).start()
 debut = time.time()
@@ -110,7 +108,6 @@ for epoch in range(epochs): # Boucle sur les époques
 
         loss = EssaiLoss.dice_loss2(y, prediction)
         # loss = LOSS(prediction[:,1,:,:], y)
-        # loss = fc.dice_loss(prediction, y)
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
         optim.zero_grad()
@@ -157,9 +154,7 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Image", seuleToute, epoch)
     writer.add_image("Prediction", mask, epoch)
 
-
     ### Fin de l'époque epoch
-
 
 fin = time.time()
 pBarEpochs.finish()
@@ -170,8 +165,5 @@ print(" ------> Temps de l'apprentissage :", timer, "min.")
 # if (config['Model']['saveModel']):
 path = os.getcwd()+"/output/model/50e_dice_SGD(5e-3).tar"#modelSaved
 torch.save(model.state_dict(), path)
-
-# lossFile.plotLoss()
-lossFile.Close()
 
 writer.close()

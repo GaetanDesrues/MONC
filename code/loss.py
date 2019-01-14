@@ -38,9 +38,7 @@ def dice_loss2(true, logits, eps=1e-7):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     probas = probas.to(device)
     true_1_hot = true_1_hot.to(device)
-    tens = probas * true_1_hot
-    tens = tens.to(device)
-    intersection = torch.sum(tens, dims)
+    intersection = torch.sum(probas * true_1_hot, dims)
     cardinality = torch.sum(probas + true_1_hot, dims)
     dice_loss = (2. * intersection / (cardinality + eps)).mean()
     return (1 - dice_loss)
