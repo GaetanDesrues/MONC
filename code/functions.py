@@ -38,9 +38,9 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows,a):
 
     for m in range(minibatch): # On parcourt le training set batch par batch
         cow_i = cows[i+m+1]
-        if a==1: cows.Rotation(uniform(1,180))
-        elif a==2: cows.SymmetryLeftRight()
-        elif a==3: cows.RandomCrop()
+        if a==1: cow_i.Rotation(uniform(1,180))
+        elif a==2: cow_i.SymmetryLeftRight()
+        elif a==3: cow_i.RandomCrop()
         diCow = cow_i.Resize((crop_size, crop_size)) # Steven : à changer
 
         imageOriginal = ImageOps.grayscale(diCow['image'])

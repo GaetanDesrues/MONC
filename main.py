@@ -48,12 +48,12 @@ optim = torch.optim.SGD(model.parameters(), lr=0.005)# lr_scheduler
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
-# cows = DataLoader(
-#     config['Model']['imgPath'],
-#     config['Model']['maskPath'],
-#     config['Model']['file'],
-#     config['Model']['extension'])
-cows = DataSample("./data/MMK")
+cows = DataLoader(
+    config['Model']['imgPath'],
+    config['Model']['maskPath'],
+    config['Model']['file'],
+    config['Model']['extension'])
+# cows = DataSample("./data/MMK")
 
 
 # Définition des tailles
