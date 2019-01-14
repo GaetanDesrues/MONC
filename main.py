@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/cell-01')
+writer = SummaryWriter('output/runs/cell-02')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -32,7 +32,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, depth=4,
+model = UNet(in_channels=1, n_classes=2, padding=True, depth=3,
     up_mode='upsample', batch_norm=True).to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
@@ -115,7 +115,6 @@ for epoch in range(epochs): # Boucle sur les époques
 
     errMoy = errMoy/epochs
 
-    lossFile.addEpochLoss(epoch,loss.item())
     writer.add_scalar("Erreur sur l'entraînement par époque ", errMoy, epoch)
 
 
