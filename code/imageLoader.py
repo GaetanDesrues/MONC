@@ -50,16 +50,35 @@ class Data():
         mask = mask.rotate(degree)
         return {'image' : img, 'mask' : mask}
 
-    def RandomCrop(self, size):
+    def SymmetryLeftRight(self):
         img = self.ExtractAsPIL()['image']
         mask = self.ExtractAsPIL()['mask']
-        box = (128, 128, size, size)
-        img = img.crop(box)
-        mask = mask.crop(box)
-        img = img.resize(size, Image.LANCZOS)
-        mask = mask.resize(size, Image.LANCZOS)
+        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+        mask = mask.transpose(Image.FLIP_LEFT_RIGHT)
         return {'image' : img, 'mask' : mask}
 
+    def RandomCrop(self):
+        img = self.ExtractAsPIL()['image']
+        mask = self.ExtractAsPIL()['mask']
+        img_size = img.img_size
+        mask_size = mask.img_size
+        #Def d'une box
+        C = 1.5
+        D = 0.5
+        # x = im_size[0]/3
+        # y = im_size[1]/3
+        # Position aléatoire de la fenêtre de crop comprise dans une bande centrale de l'image
+        x = uniform(im_size[0]/10,im_size[0]/C)
+        y = uniform(im_size[1]/3,2/3*im_size[1])
+        width = C*x
+        heigt = D*y
+        box = (x,y,width,heigt)
+        img = img.crop(box)
+        mask = mask.crop(box)
+        img = img.resize(im_size, Image.LANCZOS)
+        mask = mask.resize(mask_size, Image.LANCZOS)
+        return {'image' : img, 'mask' : mask}
+        
     def Pil2Np(self):
         return np.array(self)
 
