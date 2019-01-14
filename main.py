@@ -122,12 +122,12 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Test sur chaque image restante, cad non utilisée pour l'entrainement
-    errTe = fc.Tester(len_train-(len_train%minibatch), cows, crop_size, device, model)
+    errTe = fc.Tester(len_train-(len_train%minibatch), cows, crop_size, 10, device, model)
     writer.add_scalar("Erreur sur le test par époque ", errTe, epoch)
 
 
     # Tester sur une image pour visualiser la progression globale :
-    imgATester, mask = fc.PreparationDesDonnees(len_cows-51, 1, crop_size, cows)
+    imgATester, mask = fc.PreparationDesDonnees(len_cows-51, 1, crop_size, cows, 10)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle

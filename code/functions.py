@@ -5,12 +5,12 @@ import torch
 import torch.nn.functional as F
 from random import uniform
 
-def Tester(startIndex, cows, crop_size, device, model):
+def Tester(startIndex, cows, crop_size, a, device, model):
     model.eval()
     error = 0
     nbElem = len(cows) - startIndex - 1
     for i in range(nbElem):
-        z, zy = PreparationDesDonnees(startIndex+i, 1, crop_size, cows)
+        z, zy = PreparationDesDonnees(startIndex+i, 1, crop_size, cows,a)
         X = z.to(device)
         prediction = model(X)
         zy = CorrigerPixels(zy, crop_size, prediction.shape[2])
