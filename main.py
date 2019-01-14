@@ -90,7 +90,7 @@ for epoch in range(epochs): # Boucle sur les époques
     pBarEpochs.update(epoch)
     errMoy = 0
     for i in range(int(len_train/minibatch)): # parcourt chaque minibatch
-        z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows)
+        z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, 2)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
