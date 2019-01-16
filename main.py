@@ -117,7 +117,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
     errMoy = errMoy/epochs
 
-    lossFile.addEpochLoss(epoch,loss.item())
+
     writer.add_scalar("Erreur sur l'entraînement par époque ", errMoy, epoch)
 
 
