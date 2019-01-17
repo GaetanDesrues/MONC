@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/late-10')
+writer = SummaryWriter('output/runs/inria-10')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
