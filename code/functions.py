@@ -5,12 +5,11 @@ import torch
 import torch.nn.functional as F
 from random import uniform
 
-def Tester(startIndex, cows, crop_size, a, device, model):
+def Tester(test_idx, cows, crop_size, a, device, model):
     model.eval()
     error = 0
-    nbElem = len(cows) - startIndex - 1
-    for i in range(nbElem):
-        z, zy = PreparationDesDonnees(startIndex+i, 1, crop_size, cows,a)
+    for i in range(len(test_idx)):
+        z, zy = PreparationDesDonnees(i, 1, crop_size, cows, a, test_idx)
         X = z.to(device)
         prediction = model(X)
         zy = CorrigerPixels(zy, crop_size, prediction.shape[2])
@@ -32,15 +31,15 @@ def TesterUneImage(img, model, device):
 
 
 
-def PreparationDesDonnees(i, minibatch, crop_size, cows,a):
+def PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx):
     z = torch.Tensor(minibatch,1,crop_size,crop_size).zero_() # 1:in_channels
     zy = torch.Tensor(minibatch,crop_size,crop_size).zero_()
 
     for m in range(minibatch): # On parcourt le training set batch par batch
-        cow_i = cows[i+m+1]
-        if a==1: cow_i.Rotation(uniform(1,180))
-        elif a==2: cow_i.SymmetryLeftRight()
-        elif a==3: cow_i.RandomCrop()
+        cow_i = cows[train_idx[i+m+1]]
+        if a<=1: cow_i.Rotation(uniform(1,180))
+        elif a<=2: cow_i.SymmetryLeftRight()
+        elif a<=3: cow_i.RandomCrop()
         diCow = cow_i.Resize((crop_size, crop_size)) # Steven : à changer
 
         imageOriginal = ImageOps.grayscale(diCow['image'])

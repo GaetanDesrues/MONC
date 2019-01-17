@@ -81,6 +81,10 @@ model.train()
 # erreurMiniBatch = []
 # erreurEpoch = []
 
+indices = list(range(len_cows))
+random.shuffle(indices)
+train_idx, test_idx = indices[len_train:], indices[:len_train]
+
 pBarEpochs = ProgressBar(widgets = ['Epoques : ', SimpleProgress(), '   ', Bar()], maxval = epochs).start()
 debut = time.time()
 
@@ -88,7 +92,8 @@ for epoch in range(epochs): # Boucle sur les époques
     pBarEpochs.update(epoch)
     errMoy = 0
     for i in range(int(len_train/minibatch)): # parcourt chaque minibatch
-        z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, 2)
+        a = uniform(0,4)
+        z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
@@ -122,12 +127,14 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Test sur chaque image restante, cad non utilisée pour l'entrainement
-    errTe = fc.Tester(len_train-(len_train%minibatch), cows, crop_size, 10, device, model)
+    a = uniform(0,4)
+    errTe = fc.Tester(test_idx, cows, crop_size, a, device, model)
     writer.add_scalar("Erreur sur le test par époque ", errTe, epoch)
 
 
     # Tester sur une image pour visualiser la progression globale :
-    imgATester, mask = fc.PreparationDesDonnees(len_cows-51, 1, crop_size, cows, 10)
+    a = uniform(0,4)
+    imgATester, mask = fc.PreparationDesDonnees(51, 1, crop_size, cows, a, train_idx)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
