@@ -107,7 +107,7 @@ for epoch in range(epochs): # Boucle sur les époques
         # loss = F.cross_entropy(prediction, y)
 
         # loss = EssaiLoss.dice_loss2(y, prediction)
-        loss = LOSS(prediction[:,1,:,:], long.float(y))
+        loss = LOSS(prediction[:,1,:,:], y.float())
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
         optim.zero_grad()
