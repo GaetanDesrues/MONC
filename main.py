@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/Cells/cell-05')
+writer = SummaryWriter('output/runs/Cells/cell-06')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -57,7 +57,7 @@ cows = DataSample("./data/MMK")
 
 
 # Définition des tailles
-len_cows = int(len(cows)/2)#-1
+len_cows = int(len(cows)/3)#-1
 epochs = options.epochs
 minibatch = options.minibatch
 crop_size = options.cropsize
