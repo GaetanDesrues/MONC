@@ -27,6 +27,22 @@ class Data():
         return {'image' : img, 'mask' : img}
 
 
+def Binarisation(image):
+    # image au format [H,W]
+    tab = []
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            tab.append(image[i,j])
+    seuil = (max(tab) - min(tab))/3
+
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            if (image[i,j]<seuil):
+                image[i,j] = 0
+            else:
+                image[i,j] = 1
+    return image
+
 
 # def OptionCompilation():
 #     parser = OptionParser()
@@ -48,7 +64,7 @@ class Data():
 
 # Options de compilation
 # options = OptionCompilation()
-modelSaved = "/ModelPlafrim/model_20e.tar"#options.modelPath
+modelSaved = "/ModelPlafrim/model_10e.tar"#options.modelPath
 imgPath = "./vache.png"#options.targetPath
 diCow = Data(imgPath)
 vache = diCow.Resize((256, 256))["image"]
@@ -68,6 +84,7 @@ else:
     img = PreparationDesDonnees(vache, 256)
     prediction = model(img)
     prediction = prediction[0,1:].detach().numpy()
+    img = Binarisation(prediction[0,:,:])
 
-    # plt.imshow(prediction[0,:,:])
-    # plt.show()
+    plt.imshow(img)
+    plt.show()

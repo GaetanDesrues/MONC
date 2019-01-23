@@ -83,6 +83,23 @@ def recadrage(image):
 
 
 
+def Binarisation(image):
+    # image au format [H,W]
+    tab = []
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            tab.append(image[i,j])
+    seuil = (max(tab) - min(tab))/3
+
+    for i in range(image.shape[0]):
+        for j in range(image.shape[1]):
+            if (image[i,j]<seuil):
+                image[i,j] = 0
+            else:
+                image[i,j] = 1
+    return image
+
+
 
 
 
