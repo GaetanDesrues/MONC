@@ -40,7 +40,7 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx):
         if a<=1: cow_i.Rotation(uniform(1,180))
         elif a<=2: cow_i.SymmetryLeftRight()
         elif a<=3: cow_i.RandomCrop()
-        diCow = cow_i.Resize((crop_size, crop_size)) # Steven : à changer
+        diCow = cow_i.Resize((crop_size, crop_size)) 
 
         imageOriginal = ImageOps.grayscale(diCow['image'])
         maskOriginal = ImageOps.grayscale(diCow['mask'])
