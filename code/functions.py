@@ -9,7 +9,7 @@ def Tester(test_idx, cows, crop_size, a, device, model):
     model.eval()
     error = 0
     nbElem = int(len(cows)/2)-test_idx-1
-    for i in range(len(test_idx)):
+    for i in range(nbElem):
         z, zy = PreparationDesDonnees(i, 1, crop_size, cows, a)#, test_idx)
         X = z.to(device)
         prediction = model(X)
