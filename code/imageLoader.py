@@ -61,8 +61,8 @@ class Data():
     def Blur(self):
         img = self.ExtractAsPIL()['image']
         mask = self.ExtractAsPIL()['mask']
-        img = img.filter(ImageFilter.BLUR)
-        mask = mask.filter(ImageFilter.BLUR)
+        img = img.filter(Image.BLUR)
+        mask = mask.filter(Image.BLUR)
         return {'image' : img, 'mask' : mask}
 
     def RandomCrop(self):
