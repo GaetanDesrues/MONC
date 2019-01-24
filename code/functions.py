@@ -38,6 +38,7 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows, a):#, train_idx):
 
     for m in range(minibatch): # On parcourt le training set batch par batch
         # cow_i = cows[train_idx[i+m+1]]
+        print(m)
         cow_i = cows[(i*minibatch)+m]
         if a==1: cow_i.Rotation(uniform(1,180))
         elif a==2: cow_i.SymmetryLeftRight()
