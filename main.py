@@ -83,10 +83,10 @@ model.train()
 # erreurMiniBatch = []
 # erreurEpoch = []
 
-indices = list(range(1,len_cows))
-# print(list(range(len_cows)))
-random.shuffle(indices)
-train_idx, test_idx =indices[:len_train],indices[len_train:]
+# indices = list(range(1,len_cows+1))
+# print(indices)
+# random.shuffle(indices)
+# train_idx, test_idx =indices[:len_train],indices[len_train:]
 
 pBarEpochs = ProgressBar(widgets = ['Epoques : ', SimpleProgress(), '   ', Bar()], maxval = epochs).start()
 debut = time.time()
@@ -94,11 +94,11 @@ debut = time.time()
 for epoch in range(epochs): # Boucle sur les époques
     pBarEpochs.update(epoch)
     errMoy = 0
-    for i in range(1,int(len_train/minibatch)): # parcourt chaque minibatch
+    for i in range(int(len_train/minibatch)): # parcourt chaque minibatch
         #a = uniform(0,4)
         print(i)
         a = 3
-        z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx)
+        z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, 0)#, train_idx)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
@@ -113,11 +113,11 @@ for epoch in range(epochs): # Boucle sur les époques
         # zy = fc.CorrigerPixels(zy, crop_size, prediction.shape[2])
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
-        LOSS = torch.nn.MSELoss()
-        # loss = F.cross_entropy(prediction, y)
+        # LOSS = torch.nn.MSELoss()
+        loss = F.cross_entropy(prediction, y)
 
         # loss = EssaiLoss.dice_loss2(y, prediction)
-        loss = LOSS(prediction[:,1,:,:], y.float())
+        # loss = LOSS(prediction[:,1,:,:], y.float())
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
         optim.zero_grad()
@@ -132,14 +132,14 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Test sur chaque image restante, cad non utilisée pour l'entrainement
-    a = uniform(0,4)
-    errTe = fc.Tester(test_idx, cows, crop_size, a, device, model)
+    # a = uniform(0,4)
+    errTe = fc.Tester(len_train-(len_train%minibatch), cows, crop_size, a, device, model)
     writer.add_scalar("Erreur sur le test par époque ", errTe, epoch)
 
 
     # Tester sur une image pour visualiser la progression globale :
-    a = uniform(0,4)
-    imgATester, mask = fc.PreparationDesDonnees(51, 1, crop_size, cows, a, train_idx)
+    # a = uniform(0,4)
+    imgATester, mask = fc.PreparationDesDonnees(51, 1, crop_size, cows, a)#, train_idx)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle
