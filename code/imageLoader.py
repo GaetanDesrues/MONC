@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFilter
 import torchvision.transforms as transforms
 import numpy as np
 import matplotlib.pyplot as plt
@@ -61,8 +61,8 @@ class Data():
     def Blur(self):
         img = self.ExtractAsPIL()['image']
         mask = self.ExtractAsPIL()['mask']
-        img = img.filter(Image.BLUR)
-        mask = mask.filter(Image.BLUR)
+        img = img.filter(ImageFilter.BLUR)
+        mask = mask.filter(ImageFilter.BLUR)
         return {'image' : img, 'mask' : mask}
 
     def RandomCrop(self):
