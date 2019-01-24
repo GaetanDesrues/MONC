@@ -62,7 +62,7 @@ class Data():
         img = self.ExtractAsPIL()['image']
         mask = self.ExtractAsPIL()['mask']
         img = img.filter(ImageFilter.BLUR)
-        mask = mask.filter(ImageFilter.BLUR)
+        #mask = mask.filter(ImageFilter.BLUR)
         return {'image' : img, 'mask' : mask}
 
     def RandomCrop(self):
