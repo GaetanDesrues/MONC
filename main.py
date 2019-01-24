@@ -16,7 +16,7 @@ import torch
 import torch.nn.functional as F
 import torchvision.utils as vutils
 import torchvision.transforms as transforms
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFilter
 import random
 from random import uniform
 

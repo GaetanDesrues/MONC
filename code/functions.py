@@ -1,5 +1,5 @@
 import torchvision.transforms as transforms
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageFilter
 import numpy as np
 import torch
 import torch.nn.functional as F
