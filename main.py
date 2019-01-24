@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/Cells/cell-06')
+writer = SummaryWriter('output/runs/Cells/cell-01')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -32,7 +32,7 @@ config.read("config.cfg")
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print("Cuda available : ", torch.cuda.is_available(),"  ---  Starting on", device)
 
-model = UNet(in_channels=1, n_classes=2, padding=True, depth=4,
+model = UNet(in_channels=1, n_classes=2, padding=True, depth=3,
     up_mode='upsample', batch_norm=True).to(device)
 
 # Check si un modèle existe pour reprendre ou commencer l'apprentissage
@@ -102,9 +102,9 @@ for epoch in range(epochs): # Boucle sur les époques
         y = zy.long().to(device)  # [N, H, W] with class indices (0, 1)
         # Calcul de l'erreur
         # LOSS = torch.nn.MSELoss()
-        # loss = F.cross_entropy(prediction, y)
+        loss = F.cross_entropy(prediction, y)
 
-        loss = EssaiLoss.dice_loss2(y, prediction)
+        # loss = EssaiLoss.dice_loss2(y, prediction)
         # loss = LOSS(prediction[:,1,:,:], y)
         errMoy = errMoy + loss.item()
         # On initialise les gradients à 0 avant la rétropropagation
