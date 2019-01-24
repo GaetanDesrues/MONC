@@ -83,8 +83,8 @@ model.train()
 # erreurMiniBatch = []
 # erreurEpoch = []
 
-indices = list(range(len_cows))
-print(list(range(len_cows)))
+indices = list(range(1,len_cows+1))
+# print(list(range(len_cows)))
 random.shuffle(indices)
 train_idx, test_idx =indices[:len_train],indices[len_train:]
 
