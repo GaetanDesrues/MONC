@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+#LOL 
 from code.unet import UNet
 from code.imageLoader import DataLoader, Data, DataSample
 from code.optionCompil import OptionCompilation
