@@ -9,7 +9,7 @@ def Tester(test_idx, cows, crop_size, a, device, model):
     model.eval()
     error = 0
     for i in range(len(test_idx)):
-        z, zy = PreparationDesDonnees(i, 1, crop_size, cows, a, test_idx)
+        z, zy = PreparationDesDonnees(i, 1, crop_size, cows, a)#, test_idx)
         X = z.to(device)
         prediction = model(X)
         zy = CorrigerPixels(zy, crop_size, prediction.shape[2])
