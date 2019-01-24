@@ -83,9 +83,9 @@ model.train()
 # erreurMiniBatch = []
 # erreurEpoch = []
 
-# indices = list(range(len_cows))
-# random.shuffle(indices)
-# train_idx, test_idx =indices[:len_train],indices[len_train:]
+indices = list(range(len_cows))
+random.shuffle(indices)
+train_idx, test_idx =indices[:len_train],indices[len_train:]
 
 pBarEpochs = ProgressBar(widgets = ['Epoques : ', SimpleProgress(), '   ', Bar()], maxval = epochs).start()
 debut = time.time()
