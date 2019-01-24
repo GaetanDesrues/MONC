@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-#LOL 
+#LOLilol
 from PIL import Image, ImageOps, ImageFilter
 import torchvision.transforms as transforms
 import numpy as np
