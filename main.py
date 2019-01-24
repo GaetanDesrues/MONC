@@ -86,7 +86,7 @@ model.train()
 indices = list(range(len_cows))
 random.shuffle(indices)
 test_idx, train_idx  = indices[len_train:], indices[:len_train]
-print(test_idx)
+
 pBarEpochs = ProgressBar(widgets = ['Epoques : ', SimpleProgress(), '   ', Bar()], maxval = epochs).start()
 debut = time.time()
 

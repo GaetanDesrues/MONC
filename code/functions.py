@@ -34,7 +34,7 @@ def TesterUneImage(img, model, device):
 def PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx):
     z = torch.Tensor(minibatch,1,crop_size,crop_size).zero_() # 1:in_channels
     zy = torch.Tensor(minibatch,crop_size,crop_size).zero_()
-
+#coucou
     for m in range(minibatch): # On parcourt le training set batch par batch
         cow_i = cows[train_idx[i+m+1]]
         if a<=1: cow_i.Rotation(uniform(1,180))
