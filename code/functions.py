@@ -31,7 +31,7 @@ def TesterUneImage(img, model, device):
 
 
 
-def PreparationDesDonnees(i, minibatch, crop_size, cows, a)#, train_idx):
+def PreparationDesDonnees(i, minibatch, crop_size, cows, a):#, train_idx):
     z = torch.Tensor(minibatch,1,crop_size,crop_size).zero_() # 1:in_channels
     zy = torch.Tensor(minibatch,crop_size,crop_size).zero_()
 
