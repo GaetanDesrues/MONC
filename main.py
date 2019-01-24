@@ -25,7 +25,7 @@ from random import uniform
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/inria2-20')
+writer = SummaryWriter('output/runs/Try-10e-1lr')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -96,8 +96,7 @@ for epoch in range(epochs): # Boucle sur les époques
     errMoy = 0
     for i in range(int(len_train/minibatch)): # parcourt chaque minibatch
         #a = uniform(0,4)
-        print(i)
-        a = 3
+        # print(i)
         z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, 0)#, train_idx)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
@@ -139,7 +138,7 @@ for epoch in range(epochs): # Boucle sur les époques
 
     # Tester sur une image pour visualiser la progression globale :
     # a = uniform(0,4)
-    imgATester, mask = fc.PreparationDesDonnees(51, 1, crop_size, cows, a)#, train_idx)
+    imgATester, mask = fc.PreparationDesDonnees(51, 1, crop_size, cows, 0)#, train_idx)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
     # Prédiction du modèle

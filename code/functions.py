@@ -5,12 +5,12 @@ import torch
 import torch.nn.functional as F
 from random import uniform
 
-def Tester(test_idx, cows, crop_size, a, device, model):
+def Tester(test_idx, cows, crop_size, device, model):
     model.eval()
     error = 0
     nbElem = int(len(cows)/2)-test_idx-1
     for i in range(nbElem):
-        z, zy = PreparationDesDonnees(i, 1, crop_size, cows, a)#, test_idx)
+        z, zy = PreparationDesDonnees(i, 1, crop_size, cows, 0)#, test_idx)
         X = z.to(device)
         prediction = model(X)
         zy = CorrigerPixels(zy, crop_size, prediction.shape[2])
@@ -38,7 +38,6 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows, a):#, train_idx):
 
     for m in range(1,minibatch): # On parcourt le training set batch par batch
         # cow_i = cows[train_idx[i+m+1]]
-        print(m)
         cow_i = cows[(i*minibatch)+m]
         if a==1: cow_i.Rotation(uniform(1,180))
         elif a==2: cow_i.SymmetryLeftRight()
