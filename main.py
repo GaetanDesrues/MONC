@@ -94,7 +94,8 @@ for epoch in range(epochs): # Boucle sur les époques
     pBarEpochs.update(epoch)
     errMoy = 0
     for i in range(int(len_train/minibatch)): # parcourt chaque minibatch
-        a = uniform(0,4)
+        #a = uniform(0,4)
+        a = 3
         z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
