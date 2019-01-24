@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-#LOL 
+#LOL
 from code.unet import UNet
 from code.imageLoader import DataLoader, Data, DataSample
 from code.optionCompil import OptionCompilation
@@ -83,9 +83,9 @@ model.train()
 # erreurMiniBatch = []
 # erreurEpoch = []
 
-indices = list(range(len_cows))
-random.shuffle(indices)
-train_idx, test_idx = indices[len_train:], indices[:len_train]
+# indices = list(range(len_cows))
+# random.shuffle(indices)
+# train_idx, test_idx =indices[:len_train],indices[len_train:]
 
 pBarEpochs = ProgressBar(widgets = ['Epoques : ', SimpleProgress(), '   ', Bar()], maxval = epochs).start()
 debut = time.time()
@@ -95,8 +95,9 @@ for epoch in range(epochs): # Boucle sur les époques
     errMoy = 0
     for i in range(1,int(len_train/minibatch)): # parcourt chaque minibatch
         #a = uniform(0,4)
+        print(i)
         a = 3
-        z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx)
+        z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, a)#, train_idx)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
         prediction = model(X) # [N, 2, H, W]
