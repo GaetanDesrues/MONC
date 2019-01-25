@@ -36,7 +36,7 @@ def PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx):
     zy = torch.Tensor(minibatch,crop_size,crop_size).zero_()
 #coucou
     for m in range(minibatch): # On parcourt le training set batch par batch
-        cow_i = cows[train_idx[i+m+1]]
+        cow_i = cows[train_idx[i+m]]
         if a<=1: cow_i.Rotation(uniform(1,180))
         elif a<=2: cow_i.SymmetryLeftRight()
         elif a<=3: cow_i.Blur()
