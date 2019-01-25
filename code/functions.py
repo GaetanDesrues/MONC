@@ -17,7 +17,7 @@ def Tester(test_idx, cows, crop_size, a, device, model):
         loss = F.cross_entropy(prediction, y)
         error = error + loss.item()
     model.train()
-    return error/nbElem
+    return error/len(test_idx)
 
 
 
