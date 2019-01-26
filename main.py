@@ -25,7 +25,7 @@ from random import uniform
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/inria2-20')
+writer = SummaryWriter('output/runs/try-10E-1M-0.005lr')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
