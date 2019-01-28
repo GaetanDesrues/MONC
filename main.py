@@ -151,6 +151,11 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Image", seuleToute, epoch)
     writer.add_image("Prediction", mask, epoch)
 
+    if (epoch%10==0):
+	path = os.getcwd()+"/output/model/cell-001-"+epoch+"e.tar"#modelSaved
+	torch.save(model.state_dict(), path)
+
+
     ### Fin de l'époque epoch
 
 fin = time.time()
