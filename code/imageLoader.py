@@ -246,8 +246,8 @@ class DataSample():
 
         return {"image" : img, "mask" : mas}
 
-cows = DataSample("./data/MMK")
+# cows = DataSample("./data/MMK")
 
-cow[i]
+#cow[i]
 
 #
