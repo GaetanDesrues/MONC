@@ -109,7 +109,8 @@ class UNetConvBlock(nn.Module):
         block.append(nn.ReLU())
         if batch_norm:
             block.append(nn.BatchNorm2d(out_size))
-
+	
+	block.append(nn.Dropout(0.5))
         # block.append(nn.Sigmoid())
 
         self.block = nn.Sequential(*block)
