@@ -232,7 +232,7 @@ class DataSample():
             # print(str(self.nb)+" fichiers")
 
             ld.close()
-            os.system("rm lD.txt")
+            # os.system("rm lD.txt")
 
     def __len__(self):
         return self.nb
@@ -246,6 +246,8 @@ class DataSample():
 
         return {"image" : img, "mask" : mas}
 
+cows = DataSample("./data/MMK")
 
+cow[i]
 
 #
