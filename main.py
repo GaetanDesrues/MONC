@@ -152,8 +152,8 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Prediction", mask, epoch)
 
     if (epoch%10==0):
-	path = os.getcwd()+"/output/model/cell-001-"+epoch+"e.tar"#modelSaved
-	torch.save(model.state_dict(), path)
+        path = os.getcwd()+"/output/model/cell-001-"+epoch+"e.tar"#modelSaved
+        torch.save(model.state_dict(), path)
 
 
     ### Fin de l'époque epoch
@@ -165,7 +165,7 @@ timer = round((fin - debut)/60, 2)
 print(" ------> Temps de l'apprentissage :", timer, "min.")
 
 # if (config['Model']['saveModel']):
-path = os.getcwd()+"/output/model/cell-001.tar"#modelSaved
-torch.save(model.state_dict(), path)
+# path = os.getcwd()+"/output/model/cell-001.tar"#modelSaved
+# torch.save(model.state_dict(), path)
 
 writer.close()
