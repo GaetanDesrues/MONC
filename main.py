@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/Cells/cell-01')
+writer = SummaryWriter('output/runs/Cells/cell-001')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -57,7 +57,7 @@ cows = DataSample("./data/MMK")
 
 
 # Définition des tailles
-len_cows = int(len(cows)/3)#-1
+len_cows = len(cows)-1
 epochs = options.epochs
 minibatch = options.minibatch
 crop_size = options.cropsize
@@ -160,7 +160,7 @@ timer = round((fin - debut)/60, 2)
 print(" ------> Temps de l'apprentissage :", timer, "min.")
 
 # if (config['Model']['saveModel']):
-# path = os.getcwd()+"/output/model/cell_25e.tar"#modelSaved
-# torch.save(model.state_dict(), path)
+path = os.getcwd()+"/output/model/cell-001.tar"#modelSaved
+torch.save(model.state_dict(), path)
 
 writer.close()
