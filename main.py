@@ -96,7 +96,7 @@ for epoch in range(epochs): # Boucle sur les époques
     for i in range(1,int(len_train/minibatch)): # parcourt chaque minibatch
         #a = uniform(0,4)
         print(i)
-        a = 3
+        a = 10
         z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
@@ -131,13 +131,15 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Test sur chaque image restante, cad non utilisée pour l'entrainement
-    a = uniform(0,4)
+    #a = uniform(0,4)
+    a = 10
     errTe = fc.Tester(test_idx, cows, crop_size, a, device, model)
     writer.add_scalar("Erreur sur le test par époque ", errTe, epoch)
 
 
     # Tester sur une image pour visualiser la progression globale :
-    a = uniform(0,4)
+    #a = uniform(0,4)
+    a = 10
     imgATester, mask = fc.PreparationDesDonnees(51, 1, crop_size, cows, a, train_idx)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
