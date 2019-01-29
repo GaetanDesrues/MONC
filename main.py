@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/Cells/cell-001')
+writer = SummaryWriter('output/runs/Cells/cell-002')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -151,8 +151,8 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Image", seuleToute, epoch)
     writer.add_image("Prediction", mask, epoch)
 
-    if (epoch%10==0):
-        path = os.getcwd()+"/output/model/cell-001-"+epoch+"e.tar"#modelSaved
+    if (epoch%2==0):
+        path = os.getcwd()+"/output/model/cell-002-"+epoch+"e.tar"#modelSaved
         torch.save(model.state_dict(), path)
 
 
