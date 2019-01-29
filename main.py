@@ -23,7 +23,7 @@ from PIL import Image, ImageOps
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/Cells/cell-002')
+writer = SummaryWriter('output/runs/Cells/cell-003')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -57,7 +57,7 @@ cows = DataSample("./data/MMK")
 
 
 # Définition des tailles
-len_cows = int(len(cows)/3)#-1
+len_cows = int(len(cows)/2)#-1
 epochs = options.epochs
 minibatch = options.minibatch
 crop_size = options.cropsize
@@ -152,7 +152,7 @@ for epoch in range(epochs): # Boucle sur les époques
     writer.add_image("Prediction", mask, epoch)
 
     if (epoch%2==0):
-        path = os.getcwd()+"/output/model/cell-002-"+epoch+"e.tar"#modelSaved
+        path = os.getcwd()+"/output/model/cell-003-"+str(epoch)+"e.tar"#modelSaved
         torch.save(model.state_dict(), path)
 
 
