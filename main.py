@@ -25,7 +25,7 @@ from random import uniform
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/try-15E-1M-0.1lr')
+writer = SummaryWriter('output/runs/try-15E-1M-0.005lr')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -46,7 +46,7 @@ model = UNet(in_channels=1, n_classes=2, padding=True, depth=4,
 #         print("Attention : le modèle n'existe pas encore et va être créé !")
 
 # Optimisateur pour l'algorithme du gradient
-optim = torch.optim.SGD(model.parameters(), lr=0.1)# lr_scheduler
+optim = torch.optim.SGD(model.parameters(), lr=0.005)# lr_scheduler
 # optim = torch.optim.Adam(model.parameters() , lr=0.0005)
 
 # Objet représentant les données
