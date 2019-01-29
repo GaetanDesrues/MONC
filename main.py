@@ -25,7 +25,7 @@ from random import uniform
 options = OptionCompilation()
 
 # TensorBoardX pour les visualisations
-writer = SummaryWriter('output/runs/1E-1M-0.005lr')
+writer = SummaryWriter('output/runs/DROPOUT1E-1M-0.005lr')
 
 # Charge le fichier de configurations
 config = configparser.ConfigParser()
@@ -94,9 +94,9 @@ for epoch in range(epochs): # Boucle sur les époques
     pBarEpochs.update(epoch)
     errMoy = 0
     for i in range(1,int(len_train/minibatch)): # parcourt chaque minibatch
-        #a = uniform(0,4)
+        a = uniform(0,5)
         print(i)
-        a = 10
+        #a = 10
         z, zy = fc.PreparationDesDonnees(i, minibatch, crop_size, cows, a, train_idx)
         X = z.to(device)  # [N, 1, H, W]
         # Forward
@@ -131,15 +131,15 @@ for epoch in range(epochs): # Boucle sur les époques
 
 
     # Test sur chaque image restante, cad non utilisée pour l'entrainement
-    #a = uniform(0,4)
-    a = 10
+    a = uniform(0,5)
+    #a = 10
     errTe = fc.Tester(test_idx, cows, crop_size, a, device, model)
     writer.add_scalar("Erreur sur le test par époque ", errTe, epoch)
 
 
     # Tester sur une image pour visualiser la progression globale :
-    #a = uniform(0,4)
-    a = 10
+    a = uniform(0,5)
+    #a = 10
     imgATester, mask = fc.PreparationDesDonnees(51, 1, crop_size, cows, a, train_idx)
     xx = vutils.make_grid(imgATester, normalize=True, scale_each=True)
     writer.add_image('Image visée', xx, epoch)
