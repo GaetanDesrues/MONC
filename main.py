@@ -177,6 +177,6 @@ print(" ------> Temps de l'apprentissage :", timer, "min.")
 
 # if (config['Model']['saveModel']):
 path = os.getcwd()+"/output/model/50e_dice_SGD(5e-3).tar"#modelSaved
-torch.save(model.state_dict(), path)
+#torch.save(model.state_dict(), path)
 
 writer.close()
