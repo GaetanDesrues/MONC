@@ -5,11 +5,11 @@
 - Données : ./data
 Vaches ou Sarcômes
 
-- Fichiers sources : ./code
+- Fichiers sources : ./[code](https://github.com/GaetanDesrues/MONC2/tree/gaetan/code)
 
 - Fichiers de sortie : ./output
-  - Runs tensorboarad : ./runs
-  - Saved models : ./model
+  - Runs tensorboarad : ./output/runs
+  - Saved models : ./output/model
 
 - Paramètres makefile : époques, mini-batch, len train set, learning rate
 
