@@ -1,6 +1,6 @@
-# Segmentation d'images par deep learning
+# Projet de segmentation d'images par deep learning
 
-Implémentation du réseau de convolution Unet pour la segmentation d'images IRM
+***Implémentation du réseau de convolution Unet pour la segmentation d'images IRM
 
 - Données : ./data
 Vaches ou Sarcômes
