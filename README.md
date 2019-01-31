@@ -1,15 +1,24 @@
-UNET : Réseau de Convolution pour la segmentation d'images
+# Segmentation d'images par deep learning
 
-Données : vaches (dans ./data)
+Implémentation du réseau de convolution Unet pour la segmentation d'images IRM
 
-Fichiers sources : ./code
+- Données : ./data
+Vaches ou Sarcômes
 
-Output tensorboardX, modèle, erreurs : ./output
+- Fichiers sources : ./code
+
+- Fichiers de sortie : ./output
+  - Runs tensorboarad : ./runs
+  - Saved models : ./model
+
+- Paramètres makefile : époques, mini-batch, len train set, learning rate
+
+### Compilation
+- CPU : make main
+- Plafrim : make plaf
+- Tester sur une image : python3 test.py
+
+### Affichage des résultats
+tensorboard --logdir ./output/runs --port 6006
 
 
-
-make main pour exécuter le programme
-
-make tb pour lancer le serveur tensorboardX pour les visualisations
-
-make test pour tester la prediction du modèle pour une image
